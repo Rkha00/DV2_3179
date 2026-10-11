@@ -110,7 +110,7 @@
           "condition": {
             "param": "hover",
             "empty": false,
-            "value": 3
+            "value": 2.5
           },
           "value": 1.2
         },
@@ -273,5 +273,6 @@
       "stroke": null
     },
     "font": "Source Sans 3"
-  }
+  },
+  "background": "transparent"
 }
