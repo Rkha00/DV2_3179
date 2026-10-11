@@ -1,0 +1,277 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Choropleth map: children aged 0-14 on the NDIS for autism or developmental delay, per 1,000 children, by state and territory (June 2026).",
+  "width": 560,
+  "height": 470,
+  "padding": {
+    "top": 0,
+    "left": 0,
+    "right": 0,
+    "bottom": 0
+  },
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [
+      -18,
+      -36
+    ],
+    "rotate": [
+      -133,
+      0,
+      0
+    ]
+  },
+  "data": {
+    "url": "data/aus_states.topojson",
+    "format": {
+      "type": "topojson",
+      "feature": "states"
+    }
+  },
+  "transform": [
+    {
+      "lookup": "properties.state",
+      "from": {
+        "data": {
+          "url": "data/ndis_children_by_state.csv"
+        },
+        "key": "state",
+        "fields": [
+          "state_name",
+          "autism_or_delay_per_1000",
+          "autism_or_delay_participants",
+          "autism_or_delay_share_pct",
+          "child_participants",
+          "lon",
+          "lat"
+        ]
+      }
+    }
+  ],
+  "layer": [
+    {
+      "params": [
+        {
+          "name": "hover",
+          "select": {
+            "type": "point",
+            "on": "pointerover",
+            "clear": "pointerout",
+            "fields": [
+              "properties.state"
+            ]
+          }
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#ffffff",
+        "strokeWidth": 1.2
+      },
+      "encoding": {
+        "color": {
+          "field": "autism_or_delay_per_1000",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [
+              45,
+              55,
+              65
+            ],
+            "range": [
+              "#dceeea",
+              "#9fd0c6",
+              "#4c9f97",
+              "#1b5f63"
+            ]
+          },
+          "legend": {
+            "title": "Children per 1,000 aged 0–14",
+            "orient": "none",
+            "direction": "horizontal",
+            "labelExpr": "datum.label",
+            "titleFont": "Source Sans 3",
+            "titleFontSize": 13,
+            "titleFontWeight": 600,
+            "titleColor": "#1f2933",
+            "labelFont": "Source Sans 3",
+            "labelFontSize": 13,
+            "labelColor": "#1f2933",
+            "padding": 6,
+            "legendX": 4,
+            "legendY": 8,
+            "gradientLength": 200,
+            "gradientThickness": 14,
+            "titleLimit": 300
+          }
+        },
+        "strokeWidth": {
+          "condition": {
+            "param": "hover",
+            "empty": false,
+            "value": 3
+          },
+          "value": 1.2
+        },
+        "stroke": {
+          "condition": {
+            "param": "hover",
+            "empty": false,
+            "value": "#1f2933"
+          },
+          "value": "#ffffff"
+        },
+        "tooltip": [
+          {
+            "field": "state_name",
+            "type": "nominal",
+            "title": "State or territory"
+          },
+          {
+            "field": "autism_or_delay_per_1000",
+            "type": "quantitative",
+            "title": "Per 1,000 children",
+            "format": ".1f"
+          },
+          {
+            "field": "autism_or_delay_participants",
+            "type": "quantitative",
+            "title": "Children on the NDIS (autism or delay)",
+            "format": ","
+          },
+          {
+            "field": "autism_or_delay_share_pct",
+            "type": "quantitative",
+            "title": "Share of all child participants (%)",
+            "format": ".0f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "calculate": "datum.properties.state == 'ACT' ? 152.6 : datum.properties.state == 'TAS' ? 149.6 : datum.lon",
+          "as": "label_lon"
+        },
+        {
+          "calculate": "datum.properties.state == 'ACT' ? -35.9 : datum.properties.state == 'TAS' ? -42.4 : datum.lat",
+          "as": "label_lat"
+        },
+        {
+          "calculate": "format(datum.autism_or_delay_per_1000, '.0f')",
+          "as": "rate_label"
+        }
+      ],
+      "layer": [
+        {
+          "mark": {
+            "type": "text",
+            "font": "Source Sans 3",
+            "fontSize": 13,
+            "fontWeight": 700,
+            "dy": -8
+          },
+          "encoding": {
+            "longitude": {
+              "field": "label_lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "label_lat",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "properties.state"
+            },
+            "color": {
+              "condition": {
+                "test": "datum.autism_or_delay_per_1000 >= 55 && datum.properties.state != 'ACT' && datum.properties.state != 'TAS'",
+                "value": "#ffffff"
+              },
+              "value": "#1f2933"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "font": "Source Sans 3",
+            "fontSize": 13,
+            "dy": 8
+          },
+          "encoding": {
+            "longitude": {
+              "field": "label_lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "label_lat",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "rate_label"
+            },
+            "color": {
+              "condition": {
+                "test": "datum.autism_or_delay_per_1000 >= 55 && datum.properties.state != 'ACT' && datum.properties.state != 'TAS'",
+                "value": "#ffffff"
+              },
+              "value": "#1f2933"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "lon": 130.6,
+            "lat": -37.3,
+            "text": "South Australia: 75 per 1,000,"
+          },
+          {
+            "lon": 130.6,
+            "lat": -38.3,
+            "text": "the highest rate in Australia"
+          },
+          {
+            "lon": 122.3,
+            "lat": -28.6,
+            "text": "Lowest of the states"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "font": "Source Sans 3",
+        "fontSize": 12,
+        "fontStyle": "normal",
+        "color": "#d1495b",
+        "fontWeight": 600,
+        "align": "center"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "text"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "font": "Source Sans 3"
+  }
+}

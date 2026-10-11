@@ -1,3 +1,3 @@
 const embedOptions = { actions: false };
 
-vegaEmbed("#test_chart", "js/specs/test_chart.vg.json", embedOptions);
+vegaEmbed("#map_choropleth", "js/specs/map_choropleth.vg.json", embedOptions);
