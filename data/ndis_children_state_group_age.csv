@@ -1,0 +1,97 @@
+state,state_name,disability_group,age_band,participants,per_1000_children,avg_annual_budget
+ACT,Australian Capital Territory,Autism,0–8,884,18.4,28000
+ACT,Australian Capital Territory,Autism,9–14,1928,55.0,26000
+ACT,Australian Capital Territory,Developmental delay,0–8,1232,25.6,23313
+ACT,Australian Capital Territory,Developmental delay,9–14,0,0.0,
+ACT,Australian Capital Territory,"Hearing, vision or speech",0–8,102,2.1,19000
+ACT,Australian Capital Territory,"Hearing, vision or speech",9–14,94,2.7,12394
+ACT,Australian Capital Territory,Intellectual disability,0–8,90,1.9,45811
+ACT,Australian Capital Territory,Intellectual disability,9–14,253,7.2,44862
+ACT,Australian Capital Territory,Other,0–8,28,0.6,28000
+ACT,Australian Capital Territory,Other,9–14,26,0.7,30000
+ACT,Australian Capital Territory,Physical or neurological,0–8,46,1.0,54043
+ACT,Australian Capital Territory,Physical or neurological,9–14,87,2.5,68724
+NSW,New South Wales,Autism,0–8,22016,25.4,28000
+NSW,New South Wales,Autism,9–14,35860,57.6,27000
+NSW,New South Wales,Developmental delay,0–8,23275,26.8,22993
+NSW,New South Wales,Developmental delay,9–14,190,0.3,24095
+NSW,New South Wales,"Hearing, vision or speech",0–8,1910,2.2,21502
+NSW,New South Wales,"Hearing, vision or speech",9–14,1834,2.9,14317
+NSW,New South Wales,Intellectual disability,0–8,1906,2.2,48403
+NSW,New South Wales,Intellectual disability,9–14,4516,7.3,38733
+NSW,New South Wales,Other,0–8,754,0.9,27592
+NSW,New South Wales,Other,9–14,651,1.0,25618
+NSW,New South Wales,Physical or neurological,0–8,1188,1.4,68260
+NSW,New South Wales,Physical or neurological,9–14,1880,3.0,74969
+NT,Northern Territory,Autism,0–8,480,15.1,31000
+NT,Northern Territory,Autism,9–14,871,40.2,37000
+NT,Northern Territory,Developmental delay,0–8,755,23.8,31448
+NT,Northern Territory,Developmental delay,9–14,0,0.0,
+NT,Northern Territory,"Hearing, vision or speech",0–8,41,1.3,28000
+NT,Northern Territory,"Hearing, vision or speech",9–14,49,2.3,18000
+NT,Northern Territory,Intellectual disability,0–8,104,3.3,44038
+NT,Northern Territory,Intellectual disability,9–14,316,14.6,52623
+NT,Northern Territory,Other,0–8,14,0.4,29000
+NT,Northern Territory,Other,9–14,19,0.9,29000
+NT,Northern Territory,Physical or neurological,0–8,29,0.9,54000
+NT,Northern Territory,Physical or neurological,9–14,69,3.2,89696
+QLD,Queensland,Autism,0–8,13081,22.9,29000
+QLD,Queensland,Autism,9–14,28285,65.7,28000
+QLD,Queensland,Developmental delay,0–8,16735,29.3,22507
+QLD,Queensland,Developmental delay,9–14,107,0.2,26187
+QLD,Queensland,"Hearing, vision or speech",0–8,1530,2.7,19603
+QLD,Queensland,"Hearing, vision or speech",9–14,1325,3.1,14906
+QLD,Queensland,Intellectual disability,0–8,1153,2.0,50309
+QLD,Queensland,Intellectual disability,9–14,2990,6.9,44834
+QLD,Queensland,Other,0–8,492,0.9,27091
+QLD,Queensland,Other,9–14,434,1.0,24498
+QLD,Queensland,Physical or neurological,0–8,941,1.6,81290
+QLD,Queensland,Physical or neurological,9–14,1434,3.3,79257
+SA,South Australia,Autism,0–8,5901,33.1,29000
+SA,South Australia,Autism,9–14,12296,92.9,29000
+SA,South Australia,Developmental delay,0–8,4979,28.0,25596
+SA,South Australia,Developmental delay,9–14,45,0.3,25911
+SA,South Australia,"Hearing, vision or speech",0–8,365,2.0,20658
+SA,South Australia,"Hearing, vision or speech",9–14,437,3.3,14043
+SA,South Australia,Intellectual disability,0–8,425,2.4,49685
+SA,South Australia,Intellectual disability,9–14,1103,8.3,47308
+SA,South Australia,Other,0–8,120,0.7,31433
+SA,South Australia,Other,9–14,126,1.0,26000
+SA,South Australia,Physical or neurological,0–8,326,1.8,60175
+SA,South Australia,Physical or neurological,9–14,377,2.8,88082
+TAS,Tasmania,Autism,0–8,1264,24.1,29000
+TAS,Tasmania,Autism,9–14,2395,60.8,31000
+TAS,Tasmania,Developmental delay,0–8,1302,24.8,21975
+TAS,Tasmania,Developmental delay,9–14,0,0.0,
+TAS,Tasmania,"Hearing, vision or speech",0–8,86,1.6,20000
+TAS,Tasmania,"Hearing, vision or speech",9–14,78,2.0,14821
+TAS,Tasmania,Intellectual disability,0–8,133,2.5,42564
+TAS,Tasmania,Intellectual disability,9–14,373,9.5,53651
+TAS,Tasmania,Other,0–8,53,1.0,24000
+TAS,Tasmania,Other,9–14,50,1.3,22000
+TAS,Tasmania,Physical or neurological,0–8,52,1.0,83000
+TAS,Tasmania,Physical or neurological,9–14,120,3.0,81700
+VIC,Victoria,Autism,0–8,17325,24.3,30000
+VIC,Victoria,Autism,9–14,35825,70.7,29000
+VIC,Victoria,Developmental delay,0–8,23686,33.2,22895
+VIC,Victoria,Developmental delay,9–14,103,0.2,22845
+VIC,Victoria,"Hearing, vision or speech",0–8,1568,2.2,21377
+VIC,Victoria,"Hearing, vision or speech",9–14,1547,3.1,15937
+VIC,Victoria,Intellectual disability,0–8,1861,2.6,47808
+VIC,Victoria,Intellectual disability,9–14,4441,8.8,42842
+VIC,Victoria,Other,0–8,500,0.7,29000
+VIC,Victoria,Other,9–14,505,1.0,29206
+VIC,Victoria,Physical or neurological,0–8,912,1.3,75878
+VIC,Victoria,Physical or neurological,9–14,1622,3.2,80681
+WA,Western Australia,Autism,0–8,5587,17.8,31000
+WA,Western Australia,Autism,9–14,11403,50.0,31000
+WA,Western Australia,Developmental delay,0–8,5685,18.1,25441
+WA,Western Australia,Developmental delay,9–14,66,0.3,29606
+WA,Western Australia,"Hearing, vision or speech",0–8,586,1.9,23290
+WA,Western Australia,"Hearing, vision or speech",9–14,487,2.1,16799
+WA,Western Australia,Intellectual disability,0–8,545,1.7,59317
+WA,Western Australia,Intellectual disability,9–14,1067,4.7,57516
+WA,Western Australia,Other,0–8,185,0.6,29173
+WA,Western Australia,Other,9–14,167,0.7,23000
+WA,Western Australia,Physical or neurological,0–8,437,1.4,119538
+WA,Western Australia,Physical or neurological,9–14,600,2.6,108188

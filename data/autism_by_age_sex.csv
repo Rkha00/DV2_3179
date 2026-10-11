@@ -1,0 +1,11 @@
+age_group,sex,percent
+0–4,Male,0.6
+5–14,Male,6.1
+15–24,Male,4
+25–39,Male,0.8
+40+,Male,0.1
+0–4,Female,0.8
+5–14,Female,2.3
+15–24,Female,1.9
+25–39,Female,0.5
+40+,Female,0.2
