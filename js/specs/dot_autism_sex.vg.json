@@ -1,0 +1,232 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Connected dot plot: percentage of males and females in each age group who are autistic, 2022 (ABS SDAC).",
+  "width": 400,
+  "height": 230,
+  "data": {
+    "url": "data/autism_by_age_sex.csv"
+  },
+  "transform": [
+    {
+      "calculate": "datum.sex == 'Male' ? 'Boys and men' : 'Girls and women'",
+      "as": "group"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "age_group",
+      "type": "ordinal",
+      "scale": {
+        "domain": [
+          "0–4",
+          "5–14",
+          "15–24",
+          "25–39",
+          "40+"
+        ]
+      },
+      "title": "Age group",
+      "axis": {
+        "domain": false,
+        "ticks": false,
+        "grid": true,
+        "labelPadding": 8
+      }
+    },
+    "x": {
+      "field": "percent",
+      "type": "quantitative",
+      "title": "Autistic (% of age group)",
+      "scale": {
+        "domain": [
+          0,
+          7
+        ]
+      },
+      "axis": {
+        "values": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "grid": false
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "color": "#c4cbd3",
+        "strokeWidth": 3
+      },
+      "encoding": {
+        "detail": {
+          "field": "age_group"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "size": 160,
+        "opacity": 1
+      },
+      "encoding": {
+        "color": {
+          "field": "group",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Boys and men",
+              "Girls and women"
+            ],
+            "range": [
+              "#1b5f63",
+              "#c98a1b"
+            ]
+          },
+          "legend": {
+            "orient": "top",
+            "title": null,
+            "direction": "horizontal"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "group",
+            "title": "Group"
+          },
+          {
+            "field": "age_group",
+            "title": "Age"
+          },
+          {
+            "field": "percent",
+            "title": "Autistic (%)"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.age_group == '5–14'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "font": "'Source Sans 3', Arial, sans-serif",
+        "fontSize": 13,
+        "dy": -14,
+        "fontWeight": 700
+      },
+      "encoding": {
+        "text": {
+          "field": "percent",
+          "format": ".1f"
+        },
+        "color": {
+          "field": "group",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Boys and men",
+              "Girls and women"
+            ],
+            "range": [
+              "#1b5f63",
+              "#c98a1b"
+            ]
+          },
+          "legend": null
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x": 4.2,
+            "y": "0–4",
+            "t": "At school age, boys are about"
+          },
+          {
+            "x": 4.2,
+            "y": "0–4",
+            "t": "2.7 times as likely to be autistic",
+            "dy": 15
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "font": "'Source Sans 3', Arial, sans-serif",
+        "fontSize": 13,
+        "align": "left",
+        "color": "#d1495b",
+        "fontWeight": 600,
+        "dy": -6
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "y",
+          "type": "ordinal"
+        },
+        "text": {
+          "field": "t"
+        },
+        "yOffset": {
+          "field": "dy",
+          "type": "quantitative",
+          "scale": null
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "'Source Sans 3', Arial, sans-serif",
+    "background": "transparent",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#616e7c",
+      "titleFontWeight": 600,
+      "gridColor": "#e4e7eb",
+      "domainColor": "#9aa5b1",
+      "tickColor": "#9aa5b1",
+      "labelAngle": 0,
+      "labelLimit": 320
+    },
+    "legend": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#1f2933",
+      "labelLimit": 320,
+      "titleLimit": 320
+    },
+    "text": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "fontSize": 13,
+      "color": "#1f2933"
+    }
+  }
+}

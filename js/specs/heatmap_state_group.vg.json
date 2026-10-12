@@ -1,0 +1,189 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Heatmap: children aged 0-14 on the NDIS per 1,000 children, by state and disability group, June 2026.",
+  "width": 520,
+  "height": 270,
+  "data": {
+    "url": "data/ndis_children_state_group_age.csv"
+  },
+  "transform": [
+    {
+      "aggregate": [
+        {
+          "op": "sum",
+          "field": "participants",
+          "as": "participants"
+        }
+      ],
+      "groupby": [
+        "state",
+        "state_name",
+        "disability_group"
+      ]
+    },
+    {
+      "lookup": "state",
+      "from": {
+        "data": {
+          "url": "data/child_population_by_state.csv"
+        },
+        "key": "state",
+        "fields": [
+          "pop_0_14"
+        ]
+      }
+    },
+    {
+      "calculate": "datum.participants / datum.pop_0_14 * 1000",
+      "as": "per_1000"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "state",
+      "type": "nominal",
+      "title": null,
+      "sort": [
+        "NSW",
+        "VIC",
+        "QLD",
+        "SA",
+        "WA",
+        "TAS",
+        "NT",
+        "ACT"
+      ],
+      "axis": {
+        "orient": "top",
+        "domain": false,
+        "ticks": false,
+        "labelFontWeight": 700
+      }
+    },
+    "y": {
+      "field": "disability_group",
+      "type": "nominal",
+      "title": null,
+      "sort": [
+        "Autism",
+        "Developmental delay",
+        "Intellectual disability",
+        "Physical or neurological",
+        "Hearing, vision or speech",
+        "Other"
+      ],
+      "axis": {
+        "domain": false,
+        "ticks": false,
+        "labelLimit": 320
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "stroke": "#fbfaf7",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "color": {
+          "field": "per_1000",
+          "type": "quantitative",
+          "scale": {
+            "type": "sqrt",
+            "range": [
+              "#f1f7f6",
+              "#1b5f63"
+            ],
+            "domain": [
+              0,
+              60
+            ]
+          },
+          "legend": {
+            "title": "Per 1,000 children",
+            "orient": "right",
+            "gradientLength": 200
+          }
+        },
+        "tooltip": [
+          {
+            "field": "state_name",
+            "title": "State or territory"
+          },
+          {
+            "field": "disability_group",
+            "title": "Disability group"
+          },
+          {
+            "field": "per_1000",
+            "title": "Per 1,000 children",
+            "format": ".1f"
+          },
+          {
+            "field": "participants",
+            "title": "Number of children",
+            "format": ","
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "font": "'Source Sans 3', Arial, sans-serif",
+        "fontSize": 13
+      },
+      "encoding": {
+        "text": {
+          "field": "per_1000",
+          "format": ".1f"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.per_1000 >= 20",
+            "value": "#ffffff"
+          },
+          "value": "#1f2933"
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "'Source Sans 3', Arial, sans-serif",
+    "background": "transparent",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#616e7c",
+      "titleFontWeight": 600,
+      "gridColor": "#e4e7eb",
+      "domainColor": "#9aa5b1",
+      "tickColor": "#9aa5b1",
+      "labelAngle": 0,
+      "labelLimit": 320
+    },
+    "legend": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#1f2933",
+      "labelLimit": 320,
+      "titleLimit": 320
+    },
+    "text": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "fontSize": 13,
+      "color": "#1f2933"
+    }
+  }
+}

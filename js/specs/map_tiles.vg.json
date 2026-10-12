@@ -1,0 +1,181 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Tile grid cartogram: each state and territory is an equal-sized square in roughly its geographic position, coloured by autistic children on the NDIS per 1,000 children (June 2026).",
+  "width": 340,
+  "height": 340,
+  "data": {
+    "url": "data/ndis_children_by_state.csv"
+  },
+  "transform": [
+    {
+      "calculate": "toNumber(datum.tile_col)",
+      "as": "col"
+    },
+    {
+      "calculate": "toNumber(datum.tile_row)",
+      "as": "row"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "col",
+      "type": "ordinal",
+      "axis": null,
+      "scale": {
+        "domain": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "paddingInner": 0.08
+      }
+    },
+    "y": {
+      "field": "row",
+      "type": "ordinal",
+      "axis": null,
+      "scale": {
+        "domain": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "paddingInner": 0.08
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "cornerRadius": 4
+      },
+      "encoding": {
+        "color": {
+          "field": "autism_per_1000",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [
+              30,
+              40,
+              50
+            ],
+            "range": [
+              "#dceeea",
+              "#9fd0c6",
+              "#4c9f97",
+              "#1b5f63"
+            ]
+          },
+          "legend": {
+            "title": [
+              "Autistic children",
+              "per 1,000"
+            ],
+            "orient": "none",
+            "legendX": 0,
+            "legendY": 200,
+            "direction": "vertical"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "state_name",
+            "title": "State or territory"
+          },
+          {
+            "field": "autism_per_1000",
+            "title": "Autistic children on the NDIS per 1,000",
+            "format": ".1f"
+          },
+          {
+            "field": "autism_participants",
+            "title": "Number of children",
+            "format": ","
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "font": "'Source Sans 3', Arial, sans-serif",
+        "fontSize": 15,
+        "fontWeight": 700,
+        "dy": -9
+      },
+      "encoding": {
+        "text": {
+          "field": "state"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.autism_per_1000 >= 40",
+            "value": "#ffffff"
+          },
+          "value": "#1f2933"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "font": "'Source Sans 3', Arial, sans-serif",
+        "fontSize": 14,
+        "dy": 10
+      },
+      "encoding": {
+        "text": {
+          "field": "autism_per_1000",
+          "format": ".0f"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.autism_per_1000 >= 40",
+            "value": "#ffffff"
+          },
+          "value": "#1f2933"
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "'Source Sans 3', Arial, sans-serif",
+    "background": "transparent",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#616e7c",
+      "titleFontWeight": 600,
+      "gridColor": "#e4e7eb",
+      "domainColor": "#9aa5b1",
+      "tickColor": "#9aa5b1",
+      "labelAngle": 0,
+      "labelLimit": 320
+    },
+    "legend": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#1f2933",
+      "labelLimit": 320,
+      "titleLimit": 320
+    },
+    "text": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "fontSize": 13,
+      "color": "#1f2933"
+    }
+  }
+}

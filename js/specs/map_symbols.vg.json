@@ -1,0 +1,215 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Proportional symbol map: number of children aged 0-14 on the NDIS in each state and territory, June 2026. Circle area is proportional to the number of children.",
+  "width": 460,
+  "height": 400,
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [
+      -18,
+      -36
+    ],
+    "rotate": [
+      -133,
+      0,
+      0
+    ]
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/aus_states.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "states"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e9ecef",
+        "stroke": "#ffffff",
+        "strokeWidth": 1
+      }
+    },
+    {
+      "data": {
+        "url": "data/ndis_children_by_state.csv"
+      },
+      "transform": [
+        {
+          "calculate": "datum.child_participants >= 1000 ? format(datum.child_participants / 1000, '.0f') + 'k' : datum.child_participants",
+          "as": "count_label"
+        }
+      ],
+      "layer": [
+        {
+          "mark": {
+            "type": "circle",
+            "fill": "#1b5f63",
+            "fillOpacity": 0.75,
+            "stroke": "#ffffff",
+            "strokeWidth": 1.2
+          },
+          "encoding": {
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
+            "size": {
+              "field": "child_participants",
+              "type": "quantitative",
+              "scale": {
+                "range": [
+                  0,
+                  3600
+                ],
+                "domain": [
+                  0,
+                  100000
+                ]
+              },
+              "legend": {
+                "title": "Children aged 0–14 on the NDIS",
+                "orient": "none",
+                "legendX": 0,
+                "legendY": 0,
+                "values": [
+                  10000,
+                  50000,
+                  100000
+                ],
+                "labelExpr": "format(datum.value, ',')",
+                "symbolFillColor": "#1b5f63",
+                "symbolOpacity": 0.75,
+                "symbolStrokeColor": "#ffffff",
+                "direction": "horizontal"
+              }
+            },
+            "tooltip": [
+              {
+                "field": "state_name",
+                "title": "State or territory"
+              },
+              {
+                "field": "child_participants",
+                "title": "Children aged 0–14 on the NDIS",
+                "format": ","
+              },
+              {
+                "field": "per_1000_children",
+                "title": "Per 1,000 children",
+                "format": ".1f"
+              }
+            ]
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum.child_participants >= 20000"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "font": "'Source Sans 3', Arial, sans-serif",
+            "fontSize": 13,
+            "color": "#ffffff",
+            "fontWeight": 700
+          },
+          "encoding": {
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "count_label"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum.child_participants < 20000"
+            },
+            {
+              "calculate": "datum.state == 'ACT' ? 152.4 : datum.state == 'TAS' ? 149.8 : toNumber(datum.lon)",
+              "as": "lx"
+            },
+            {
+              "calculate": "datum.state == 'ACT' ? -36.2 : datum.state == 'TAS' ? -42.3 : toNumber(datum.lat) + 2.6",
+              "as": "ly"
+            },
+            {
+              "calculate": "datum.state + ' ' + datum.count_label",
+              "as": "small_label"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "font": "'Source Sans 3', Arial, sans-serif",
+            "fontSize": 13,
+            "fontWeight": 700,
+            "align": "center"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "lx",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "ly",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "small_label"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "config": {
+    "font": "'Source Sans 3', Arial, sans-serif",
+    "background": "transparent",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#616e7c",
+      "titleFontWeight": 600,
+      "gridColor": "#e4e7eb",
+      "domainColor": "#9aa5b1",
+      "tickColor": "#9aa5b1",
+      "labelAngle": 0,
+      "labelLimit": 320
+    },
+    "legend": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#1f2933",
+      "labelLimit": 320,
+      "titleLimit": 320
+    },
+    "text": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "fontSize": 13,
+      "color": "#1f2933"
+    }
+  }
+}

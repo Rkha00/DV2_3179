@@ -1,0 +1,273 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Butterfly chart: number of children on the NDIS aged 0-8 (left) and 9-14 (right) by disability group, June 2026.",
+  "data": {
+    "url": "data/ndis_children_national_group_age.csv"
+  },
+  "spacing": 0,
+  "hconcat": [
+    {
+      "width": 165,
+      "height": 250,
+      "transform": [
+        {
+          "filter": "datum.age_band == '0–8'"
+        }
+      ],
+      "title": {
+        "text": "Aged 0–8",
+        "font": "'Source Sans 3', Arial, sans-serif",
+        "fontSize": 14,
+        "fontWeight": 700,
+        "color": "#4c9f97",
+        "anchor": "end"
+      },
+      "encoding": {
+        "y": {
+          "field": "disability_group",
+          "type": "nominal",
+          "sort": [
+            "Autism",
+            "Developmental delay",
+            "Intellectual disability",
+            "Hearing, vision or speech",
+            "Physical or neurological",
+            "Other"
+          ],
+          "axis": null
+        },
+        "x": {
+          "field": "participants",
+          "type": "quantitative",
+          "title": null,
+          "scale": {
+            "domain": [
+              0,
+              150000
+            ],
+            "reverse": true
+          },
+          "axis": {
+            "values": [
+              0,
+              50000,
+              100000
+            ],
+            "format": "~s",
+            "grid": false
+          }
+        }
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "bar",
+            "color": "#4c9f97",
+            "cornerRadiusEnd": 2
+          },
+          "encoding": {
+            "tooltip": [
+              {
+                "field": "disability_group",
+                "title": "Disability group"
+              },
+              {
+                "field": "age_band",
+                "title": "Age"
+              },
+              {
+                "field": "participants",
+                "title": "Children on the NDIS",
+                "format": ","
+              }
+            ]
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "font": "'Source Sans 3', Arial, sans-serif",
+            "fontSize": 13,
+            "align": "right",
+            "dx": -4,
+            "color": "#616e7c"
+          },
+          "encoding": {
+            "text": {
+              "field": "participants",
+              "format": ",.0f"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "width": 150,
+      "height": 250,
+      "view": {
+        "stroke": null
+      },
+      "encoding": {
+        "y": {
+          "field": "disability_group",
+          "type": "nominal",
+          "sort": [
+            "Autism",
+            "Developmental delay",
+            "Intellectual disability",
+            "Hearing, vision or speech",
+            "Physical or neurological",
+            "Other"
+          ],
+          "axis": null
+        },
+        "text": {
+          "field": "disability_group"
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.age_band == '0–8'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "font": "'Source Sans 3', Arial, sans-serif",
+        "fontSize": 13,
+        "fontWeight": 600,
+        "align": "center"
+      }
+    },
+    {
+      "width": 165,
+      "height": 250,
+      "transform": [
+        {
+          "filter": "datum.age_band == '9–14'"
+        }
+      ],
+      "title": {
+        "text": "Aged 9–14",
+        "font": "'Source Sans 3', Arial, sans-serif",
+        "fontSize": 14,
+        "fontWeight": 700,
+        "color": "#1b5f63",
+        "anchor": "start"
+      },
+      "encoding": {
+        "y": {
+          "field": "disability_group",
+          "type": "nominal",
+          "sort": [
+            "Autism",
+            "Developmental delay",
+            "Intellectual disability",
+            "Hearing, vision or speech",
+            "Physical or neurological",
+            "Other"
+          ],
+          "axis": null
+        },
+        "x": {
+          "field": "participants",
+          "type": "quantitative",
+          "title": null,
+          "scale": {
+            "domain": [
+              0,
+              150000
+            ],
+            "reverse": false
+          },
+          "axis": {
+            "values": [
+              0,
+              50000,
+              100000
+            ],
+            "format": "~s",
+            "grid": false
+          }
+        }
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "bar",
+            "color": "#1b5f63",
+            "cornerRadiusEnd": 2
+          },
+          "encoding": {
+            "tooltip": [
+              {
+                "field": "disability_group",
+                "title": "Disability group"
+              },
+              {
+                "field": "age_band",
+                "title": "Age"
+              },
+              {
+                "field": "participants",
+                "title": "Children on the NDIS",
+                "format": ","
+              }
+            ]
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "font": "'Source Sans 3', Arial, sans-serif",
+            "fontSize": 13,
+            "align": "left",
+            "dx": 4,
+            "color": "#616e7c"
+          },
+          "encoding": {
+            "text": {
+              "field": "participants",
+              "format": ",.0f"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "config": {
+    "font": "'Source Sans 3', Arial, sans-serif",
+    "background": "transparent",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#616e7c",
+      "titleFontWeight": 600,
+      "gridColor": "#e4e7eb",
+      "domainColor": "#9aa5b1",
+      "tickColor": "#9aa5b1",
+      "labelAngle": 0,
+      "labelLimit": 320
+    },
+    "legend": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#1f2933",
+      "labelLimit": 320,
+      "titleLimit": 320
+    },
+    "text": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "fontSize": 13,
+      "color": "#1f2933"
+    }
+  }
+}

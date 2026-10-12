@@ -1,0 +1,144 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Normalised stacked bar chart: share of NDIS plan budgets for children aged 0-14 spent on each type of support, by disability group, June 2026.",
+  "width": 300,
+  "height": 250,
+  "data": {
+    "url": "data/ndis_children_budget_by_support.csv"
+  },
+  "transform": [
+    {
+      "joinaggregate": [
+        {
+          "op": "sum",
+          "field": "total_budget",
+          "as": "group_total"
+        }
+      ],
+      "groupby": [
+        "disability_group"
+      ]
+    },
+    {
+      "calculate": "datum.total_budget / datum.group_total",
+      "as": "share"
+    }
+  ],
+  "mark": {
+    "type": "bar",
+    "stroke": "#fbfaf7",
+    "strokeWidth": 1
+  },
+  "encoding": {
+    "y": {
+      "field": "disability_group",
+      "type": "nominal",
+      "title": null,
+      "sort": [
+        "Autism",
+        "Developmental delay",
+        "Intellectual disability",
+        "Physical or neurological",
+        "Hearing, vision or speech",
+        "Other"
+      ],
+      "axis": {
+        "domain": false,
+        "ticks": false,
+        "labelLimit": 320
+      }
+    },
+    "x": {
+      "field": "share",
+      "type": "quantitative",
+      "stack": "normalize",
+      "title": "Share of plan budgets",
+      "axis": {
+        "format": "%",
+        "values": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      }
+    },
+    "color": {
+      "field": "support_type",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Therapy and skill building",
+          "Everyday support",
+          "Equipment and home changes"
+        ],
+        "range": [
+          "#1b5f63",
+          "#9fd0c6",
+          "#c98a1b"
+        ]
+      },
+      "legend": {
+        "orient": "top",
+        "title": null,
+        "direction": "vertical"
+      }
+    },
+    "order": {
+      "field": "support_type",
+      "sort": "descending"
+    },
+    "tooltip": [
+      {
+        "field": "disability_group",
+        "title": "Disability group"
+      },
+      {
+        "field": "support_type",
+        "title": "Support type"
+      },
+      {
+        "field": "share",
+        "title": "Share of budget",
+        "format": ".0%"
+      }
+    ]
+  },
+  "config": {
+    "font": "'Source Sans 3', Arial, sans-serif",
+    "background": "transparent",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#616e7c",
+      "titleFontWeight": 600,
+      "gridColor": "#e4e7eb",
+      "domainColor": "#9aa5b1",
+      "tickColor": "#9aa5b1",
+      "labelAngle": 0,
+      "labelLimit": 320
+    },
+    "legend": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#1f2933",
+      "labelLimit": 320,
+      "titleLimit": 320
+    },
+    "text": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "fontSize": 13,
+      "color": "#1f2933"
+    }
+  }
+}

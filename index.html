@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>More Children Seen: Autism, ADHD and Support in Australia</title>
+  <meta name="author" content="Raahima Khan">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,28 +17,93 @@
 </head>
 <body>
   <header class="hero">
+    <p class="kicker">Child development and learning in Australia</p>
     <h1>More Children Seen</h1>
-    <p class="subtitle">Autism, ADHD and support for Australian children</p>
+    <p class="subtitle">More Australian children are being identified as autistic or with ADHD than ever before.
+      Who are they, where do they live, and what support reaches them?</p>
   </header>
 
   <main>
+    <!-- 1. How common -->
     <section id="how-common">
       <h2>How common is it?</h2>
-      <p>Placeholder text.</p>
+      <div class="row">
+        <figure class="viz">
+          <figcaption class="viz-title">
+            <h3>About 4 in every 100 school-age children are autistic</h3>
+            <p>Each square is one child aged 5–14, 2022</p>
+          </figcaption>
+          <div id="waffle_autism" class="chart"></div>
+          <p class="source">Source: ABS, Autism in Australia 2022 (Survey of Disability, Ageing and Carers).</p>
+        </figure>
+        <div class="stat-panel">
+          <p class="big-number">4.3%</p>
+          <p>of Australian children aged 5–14 were autistic in 2022, up from <strong>2.8%</strong> in 2015.</p>
+          <p>In a class of 25 children, that is about one child in every classroom.</p>
+          <p class="muted">Autism is a lifelong difference in how a person communicates, interacts and experiences
+            the world. ADHD (attention deficit hyperactivity disorder) affects attention, activity and impulse control.</p>
+        </div>
+      </div>
     </section>
 
+    <!-- 2. Over time -->
     <section id="over-time">
       <h2>Awareness over time</h2>
+      <p class="lead">Both autism and ADHD are being identified far more often than a decade ago. This mostly reflects
+        better awareness and diagnosis, not necessarily more children with these conditions.</p>
+      <div class="row">
+        <figure class="viz">
+          <figcaption class="viz-title">
+            <h3>Autism rates rose in every age group</h3>
+            <p>Autistic people as a share of each age group, 2015 and 2022</p>
+          </figcaption>
+          <div id="slope_autism" class="chart"></div>
+          <p class="viz-note">Young adults aged 20–24 more than doubled, suggesting many are being diagnosed later in life.</p>
+          <p class="source">Source: ABS, Survey of Disability, Ageing and Carers 2015 and 2022.</p>
+        </figure>
+        <figure class="viz">
+          <figcaption class="viz-title">
+            <h3>ADHD medication use among teenagers is climbing fast</h3>
+            <p>Young people aged 12–17 dispensed ADHD medication, per 1,000</p>
+          </figcaption>
+          <div id="line_adhd" class="chart"></div>
+          <p class="viz-note">Medication data is used here as a sign of diagnosis, since Australia has no national ADHD register.</p>
+          <p class="source">Source: AIHW, Mental health: young people population profile, 2024–25.</p>
+        </figure>
+      </div>
     </section>
 
+    <!-- 3. Who -->
     <section id="who">
       <h2>Who is diagnosed?</h2>
+      <p class="lead">Boys are diagnosed far more often than girls, but the gap is closing as girls are recognised
+        more often. Age matters too: some conditions are identified early, others later.</p>
+      <div class="row">
+        <figure class="viz">
+          <figcaption class="viz-title">
+            <h3>Boys are more likely to be identified as autistic</h3>
+            <p>Autistic people as a share of each age group, by sex, 2022</p>
+          </figcaption>
+          <div id="dot_autism_sex" class="chart"></div>
+          <p class="source">Source: ABS, Autism in Australia 2022.</p>
+        </figure>
+        <figure class="viz">
+          <figcaption class="viz-title">
+            <h3>Developmental delay is an early-years label</h3>
+            <p>Children on the NDIS by disability group and age, June 2026</p>
+          </figcaption>
+          <div id="butterfly_age_group" class="chart"></div>
+          <p class="viz-note">Developmental delay almost disappears after age 8, while autism doubles between the two age groups.</p>
+          <p class="source">Source: NDIS participant data, June 2026.</p>
+        </figure>
+      </div>
     </section>
 
+    <!-- 4. Where -->
     <section id="where">
       <h2>Where is support reaching?</h2>
-      <p class="lead">The National Disability Insurance Scheme (NDIS) funds support for children with
-        a lasting disability or a delay in their development. How many children it reaches depends a
+      <p class="lead">The National Disability Insurance Scheme (NDIS) funds support for children with a
+        lasting disability or a delay in their development. How many children it reaches depends a
         lot on where they live.</p>
 
       <figure class="viz">
@@ -51,20 +117,92 @@
           Darker states have higher rates. Hover over a state for exact numbers.</p>
         <p class="source">Source: NDIS participant data, June 2026; ABS population estimates, June 2025.</p>
       </figure>
+
+      <div class="row">
+        <figure class="viz">
+          <figcaption class="viz-title">
+            <h3>Most children on the NDIS live in the east</h3>
+            <p>Number of children aged 0–14 on the NDIS, June 2026</p>
+          </figcaption>
+          <div id="map_symbols" class="chart"></div>
+          <p class="viz-note">Raw numbers follow population: NSW and Victoria have the most children on the scheme,
+            even though South Australia has the highest rate.</p>
+        </figure>
+        <figure class="viz">
+          <figcaption class="viz-title">
+            <h3>Autism alone, with every state the same size</h3>
+            <p>Autistic children on the NDIS per 1,000 children, June 2026</p>
+          </figcaption>
+          <div id="map_tiles" class="chart"></div>
+          <p class="viz-note">Each square is one state or territory, placed roughly where it sits on the map, so small
+            places like the ACT are as visible as large ones.</p>
+        </figure>
+      </div>
+
+      <figure class="viz">
+        <figcaption class="viz-title">
+          <h3>Autism drives the differences between states</h3>
+          <p>Children aged 0–14 on the NDIS per 1,000 children, by state and disability group, June 2026</p>
+        </figcaption>
+        <div id="heatmap_state_group" class="chart"></div>
+        <p class="source">Source: NDIS participant data, June 2026; ABS population estimates, June 2025.</p>
+      </figure>
     </section>
 
+    <!-- 5. Support -->
     <section id="support">
       <h2>What support do children get?</h2>
+      <div class="row">
+        <figure class="viz">
+          <figcaption class="viz-title">
+            <h3>Plan budgets differ by disability</h3>
+            <p>Average yearly NDIS plan budget per child aged 0–14, June 2026</p>
+          </figcaption>
+          <div id="lollipop_budget" class="chart"></div>
+          <p class="viz-note">Autistic children and children with developmental delay are the largest groups but have
+            some of the smaller budgets per child.</p>
+        </figure>
+        <figure class="viz">
+          <figcaption class="viz-title">
+            <h3>Most money goes to therapy</h3>
+            <p>Share of children's plan budgets by type of support, June 2026</p>
+          </figcaption>
+          <div id="stacked_budget_split" class="chart"></div>
+          <p class="source">Source: NDIS participant data, June 2026.</p>
+        </figure>
+      </div>
+
+      <figure class="viz">
+        <figcaption class="viz-title">
+          <h3>At school, autistic students get more help, but many need more</h3>
+          <p>Students aged 5–20 with disability receiving each type of support, 2022</p>
+        </figcaption>
+        <div id="dot_school_support" class="chart"></div>
+        <p class="viz-note">77% of autistic students receive some support at school, compared with 53% of students with
+          other disability. Yet almost half (48%) of autistic students who receive support say they need more.</p>
+        <p class="source">Source: ABS, Autism in Australia 2022.</p>
+      </figure>
     </section>
 
+    <!-- 6. Conclusion -->
     <section id="conclusion">
       <h2>What this means</h2>
+      <p>More children are being recognised as autistic or with ADHD, and girls are increasingly part of that story.
+        But support depends on where a child lives and what label they receive. Recognition is rising; making sure
+        support keeps up is the next challenge.</p>
     </section>
   </main>
 
   <footer>
     <p><strong>Author:</strong> Raahima Khan &middot; <strong>Published:</strong> October 2026</p>
-    <p><strong>Data sources:</strong> to be added.</p>
+    <p><strong>Data sources:</strong></p>
+    <ul>
+      <li>National Disability Insurance Agency, <a href="https://dataresearch.ndis.gov.au/datasets/participant-datasets">Participant numbers and plan budgets</a>, June 2026</li>
+      <li>Australian Bureau of Statistics, <a href="https://www.abs.gov.au/articles/autism-australia-2022">Autism in Australia, 2022</a></li>
+      <li>Australian Bureau of Statistics, <a href="https://www.abs.gov.au/statistics/people/population/national-state-and-territory-population/latest-release">National, state and territory population</a>, June 2025</li>
+      <li>Australian Institute of Health and Welfare, <a href="https://www.aihw.gov.au/mental-health/topic-areas/community-based-services/mental-health-prescriptions/adhd-medications-dispensed-overtime">Mental health: ADHD medications dispensed</a>, 2024–25 data tables</li>
+      <li>State boundaries: Australian Bureau of Statistics, ASGS Edition 3 (2021)</li>
+    </ul>
   </footer>
 
   <script src="js/charts.js"></script>

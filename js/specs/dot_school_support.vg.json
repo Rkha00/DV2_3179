@@ -1,0 +1,150 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Connected dot plot: percentage of school students aged 5-20 with disability receiving each type of support, autistic students compared with students with other disability, 2022 (ABS SDAC).",
+  "width": 380,
+  "height": 250,
+  "data": {
+    "url": "data/autism_school_experience.csv"
+  },
+  "transform": [
+    {
+      "filter": "datum.category == 'Support received' && datum.item != 'Other support'"
+    },
+    {
+      "calculate": "datum.group == 'Autistic' ? 'Autistic students' : 'Students with other disability'",
+      "as": "who"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "item",
+      "type": "nominal",
+      "title": null,
+      "sort": {
+        "field": "percent",
+        "op": "max",
+        "order": "descending"
+      },
+      "axis": {
+        "domain": false,
+        "ticks": false,
+        "grid": true,
+        "labelLimit": 320,
+        "labelPadding": 8
+      }
+    },
+    "x": {
+      "field": "percent",
+      "type": "quantitative",
+      "title": "Students receiving this support (%)",
+      "scale": {
+        "domain": [
+          0,
+          40
+        ]
+      },
+      "axis": {
+        "grid": false,
+        "values": [
+          0,
+          10,
+          20,
+          30,
+          40
+        ]
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "color": "#c4cbd3",
+        "strokeWidth": 3
+      },
+      "encoding": {
+        "detail": {
+          "field": "item"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "size": 140,
+        "opacity": 1
+      },
+      "encoding": {
+        "color": {
+          "field": "who",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Autistic students",
+              "Students with other disability"
+            ],
+            "range": [
+              "#1b5f63",
+              "#9aa5b1"
+            ]
+          },
+          "legend": {
+            "orient": "top",
+            "title": null,
+            "direction": "horizontal"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "who",
+            "title": "Group"
+          },
+          {
+            "field": "item",
+            "title": "Support"
+          },
+          {
+            "field": "percent",
+            "title": "Receiving it (%)"
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "font": "'Source Sans 3', Arial, sans-serif",
+    "background": "transparent",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#616e7c",
+      "titleFontWeight": 600,
+      "gridColor": "#e4e7eb",
+      "domainColor": "#9aa5b1",
+      "tickColor": "#9aa5b1",
+      "labelAngle": 0,
+      "labelLimit": 320
+    },
+    "legend": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#1f2933",
+      "labelLimit": 320,
+      "titleLimit": 320
+    },
+    "text": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "fontSize": 13,
+      "color": "#1f2933"
+    }
+  }
+}

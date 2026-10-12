@@ -1,0 +1,211 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Line chart: young people aged 12-17 dispensed ADHD medication per 1,000, by sex, 2014-15 to 2023-24 (AIHW).",
+  "width": 360,
+  "height": 300,
+  "data": {
+    "url": "data/adhd_medication_12_17.csv"
+  },
+  "transform": [
+    {
+      "filter": "datum.sex != 'People'"
+    },
+    {
+      "calculate": "datum.sex == 'Male' ? 'Boys' : 'Girls'",
+      "as": "group"
+    },
+    {
+      "calculate": "datum.group + ' ' + datum.patients_per_1000",
+      "as": "label"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "year_end",
+      "type": "quantitative",
+      "title": "Financial year ending",
+      "scale": {
+        "domain": [
+          2015,
+          2024
+        ],
+        "nice": false
+      },
+      "axis": {
+        "format": "d",
+        "values": [
+          2015,
+          2016,
+          2018,
+          2020,
+          2022,
+          2024
+        ],
+        "grid": false
+      }
+    },
+    "y": {
+      "field": "patients_per_1000",
+      "type": "quantitative",
+      "title": "Per 1,000 young people",
+      "scale": {
+        "domain": [
+          0,
+          100
+        ]
+      },
+      "axis": {
+        "values": [
+          0,
+          25,
+          50,
+          75,
+          100
+        ],
+        "domain": false,
+        "ticks": false
+      }
+    },
+    "color": {
+      "field": "group",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Boys",
+          "Girls"
+        ],
+        "range": [
+          "#1b5f63",
+          "#c98a1b"
+        ]
+      },
+      "legend": null
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "size": 40
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "group",
+            "title": "Group"
+          },
+          {
+            "field": "financial_year",
+            "title": "Year"
+          },
+          {
+            "field": "patients_per_1000",
+            "title": "Per 1,000 young people"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.year_end == 2024"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "font": "'Source Sans 3', Arial, sans-serif",
+        "fontSize": 13,
+        "align": "left",
+        "dx": 8,
+        "fontWeight": 700
+      },
+      "encoding": {
+        "text": {
+          "field": "label"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x": 2015.2,
+            "y": 96,
+            "t": "Girls' rate grew more than 5 times,"
+          },
+          {
+            "x": 2015.2,
+            "y": 89,
+            "t": "from 9 to 50 per 1,000"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "font": "'Source Sans 3', Arial, sans-serif",
+        "fontSize": 13,
+        "align": "left",
+        "color": "#d1495b",
+        "fontWeight": 600
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "t"
+        },
+        "color": {
+          "value": "#d1495b"
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "'Source Sans 3', Arial, sans-serif",
+    "background": "transparent",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#616e7c",
+      "titleFontWeight": 600,
+      "gridColor": "#e4e7eb",
+      "domainColor": "#9aa5b1",
+      "tickColor": "#9aa5b1",
+      "labelAngle": 0,
+      "labelLimit": 320
+    },
+    "legend": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#1f2933",
+      "labelLimit": 320,
+      "titleLimit": 320
+    },
+    "text": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "fontSize": 13,
+      "color": "#1f2933"
+    }
+  }
+}

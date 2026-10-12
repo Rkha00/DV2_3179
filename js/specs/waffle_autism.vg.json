@@ -1,0 +1,106 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Waffle chart: 100 squares represent 100 children aged 5-14; filled squares show the 4.3% who are autistic (ABS SDAC 2022).",
+  "width": 300,
+  "height": 300,
+  "data": {
+    "sequence": {
+      "start": 0,
+      "stop": 100,
+      "as": "i"
+    }
+  },
+  "transform": [
+    {
+      "calculate": "datum.i % 10",
+      "as": "col"
+    },
+    {
+      "calculate": "floor(datum.i / 10)",
+      "as": "row"
+    },
+    {
+      "calculate": "datum.i >= 96 ? 'Autistic' : 'Not autistic'",
+      "as": "group"
+    }
+  ],
+  "mark": {
+    "type": "square",
+    "size": 520,
+    "cornerRadius": 3
+  },
+  "encoding": {
+    "x": {
+      "field": "col",
+      "type": "ordinal",
+      "axis": null
+    },
+    "y": {
+      "field": "row",
+      "type": "ordinal",
+      "axis": null
+    },
+    "color": {
+      "field": "group",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Autistic",
+          "Not autistic"
+        ],
+        "range": [
+          "#1b5f63",
+          "#d9dee3"
+        ]
+      },
+      "legend": {
+        "orient": "bottom",
+        "title": null,
+        "symbolType": "square",
+        "symbolSize": 200
+      }
+    },
+    "tooltip": [
+      {
+        "field": "group",
+        "title": "Each square is one child"
+      }
+    ]
+  },
+  "config": {
+    "font": "'Source Sans 3', Arial, sans-serif",
+    "background": "transparent",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#616e7c",
+      "titleFontWeight": 600,
+      "gridColor": "#e4e7eb",
+      "domainColor": "#9aa5b1",
+      "tickColor": "#9aa5b1",
+      "labelAngle": 0,
+      "labelLimit": 320
+    },
+    "legend": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#1f2933",
+      "labelLimit": 320,
+      "titleLimit": 320
+    },
+    "text": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "fontSize": 13,
+      "color": "#1f2933"
+    }
+  }
+}

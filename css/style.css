@@ -61,3 +61,44 @@ body #vg-tooltip-element.vg-tooltip {
   box-shadow: 0 4px 12px rgba(31, 41, 51, 0.12);
 }
 body #vg-tooltip-element.vg-tooltip table tr td.key { color: var(--muted); }
+
+/* Layout: two-column rows that share top edges (horizontal sight lines) */
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.row > .viz { margin: 24px 0; }
+.viz { margin: 32px 0; }
+.viz-title h3 { min-height: 2.4em; }
+figure { margin-left: 0; margin-right: 0; }
+
+.kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0 0 8px;
+}
+.subtitle { max-width: 60ch; }
+
+.stat-panel { padding-top: 80px; }
+.big-number {
+  font-family: "Nunito", Arial, sans-serif;
+  font-size: 72px;
+  font-weight: 800;
+  line-height: 1;
+  color: #1b5f63;
+  margin: 0 0 8px;
+}
+.muted { color: var(--muted); font-size: 16px; }
+
+footer ul { padding-left: 20px; margin-top: 4px; }
+footer a { color: #1b5f63; }
+
+@media (max-width: 900px) {
+  .row { grid-template-columns: 1fr; gap: 0; }
+  .stat-panel { padding-top: 0; }
+}
