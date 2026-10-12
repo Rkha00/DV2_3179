@@ -91,11 +91,11 @@
             "orient": "none",
             "direction": "horizontal",
             "labelExpr": "datum.label",
-            "titleFont": "Source Sans 3",
+            "titleFont": "'Source Sans 3', Arial, sans-serif",
             "titleFontSize": 13,
             "titleFontWeight": 600,
             "titleColor": "#1f2933",
-            "labelFont": "Source Sans 3",
+            "labelFont": "'Source Sans 3', Arial, sans-serif",
             "labelFontSize": 13,
             "labelColor": "#1f2933",
             "padding": 6,
@@ -168,7 +168,7 @@
         {
           "mark": {
             "type": "text",
-            "font": "Source Sans 3",
+            "font": "'Source Sans 3', Arial, sans-serif",
             "fontSize": 13,
             "fontWeight": 700,
             "dy": -8
@@ -197,7 +197,7 @@
         {
           "mark": {
             "type": "text",
-            "font": "Source Sans 3",
+            "font": "'Source Sans 3', Arial, sans-serif",
             "fontSize": 13,
             "dy": 8
           },
@@ -246,7 +246,7 @@
       },
       "mark": {
         "type": "text",
-        "font": "Source Sans 3",
+        "font": "'Source Sans 3', Arial, sans-serif",
         "fontSize": 12,
         "fontStyle": "normal",
         "color": "#d1495b",
@@ -272,7 +272,7 @@
     "view": {
       "stroke": null
     },
-    "font": "Source Sans 3"
+    "font": "'Source Sans 3', Arial, sans-serif"
   },
   "background": "transparent"
 }

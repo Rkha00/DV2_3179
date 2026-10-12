@@ -52,7 +52,7 @@ h3 { font-size: 21px; font-weight: 700; margin: 0 0 4px; }
 .source { font-size: 13px; color: var(--muted); margin-top: 4px; }
 
 /* Chart tooltips match the page typography */
-#vg-tooltip-element {
+body #vg-tooltip-element.vg-tooltip {
   font-family: "Source Sans 3", Arial, sans-serif;
   font-size: 14px;
   color: var(--text);
@@ -60,4 +60,4 @@ h3 { font-size: 21px; font-weight: 700; margin: 0 0 4px; }
   border-radius: 6px;
   box-shadow: 0 4px 12px rgba(31, 41, 51, 0.12);
 }
-#vg-tooltip-element table tr td.key { color: var(--muted); }
+body #vg-tooltip-element.vg-tooltip table tr td.key { color: var(--muted); }
