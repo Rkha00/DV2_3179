@@ -150,6 +150,63 @@
       }
     },
     {
+      "data": {
+        "values": [
+          {
+            "lon": 149.05,
+            "lat": -35.5,
+            "lon2": 151.75,
+            "lat2": -35.85
+          }
+        ]
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "rule",
+            "color": "#1f2933",
+            "strokeWidth": 1
+          },
+          "encoding": {
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
+            "longitude2": {
+              "field": "lon2"
+            },
+            "latitude2": {
+              "field": "lat2"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "point",
+            "shape": "circle",
+            "size": 60,
+            "filled": false,
+            "color": "#1f2933",
+            "strokeWidth": 1.2
+          },
+          "encoding": {
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            }
+          }
+        }
+      ]
+    },
+    {
       "transform": [
         {
           "calculate": "datum.properties.state == 'ACT' ? 152.6 : datum.properties.state == 'TAS' ? 149.6 : datum.lon",
