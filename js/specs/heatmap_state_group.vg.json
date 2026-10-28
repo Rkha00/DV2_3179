@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Heatmap: children aged 0-14 on the NDIS per 1,000 children, by state and disability group, June 2026.",
-  "width": 520,
+  "description": "Heatmap: children aged 0-14 on the NDIS per 1,000 children, by state and disability group, June 2026. Colour uses a square-root scale so smaller groups remain visible.",
+  "width": 560,
   "height": 270,
   "data": {
     "url": "data/ndis_children_state_group_age.csv"
@@ -74,8 +74,7 @@
       ],
       "axis": {
         "domain": false,
-        "ticks": false,
-        "labelLimit": 320
+        "ticks": false
       }
     }
   },
@@ -102,9 +101,19 @@
             ]
           },
           "legend": {
-            "title": "Per 1,000 children",
+            "title": [
+              "Per 1,000",
+              "children"
+            ],
             "orient": "right",
-            "gradientLength": 200
+            "gradientLength": 180,
+            "values": [
+              0,
+              5,
+              20,
+              40,
+              60
+            ]
           }
         },
         "tooltip": [
@@ -127,6 +136,19 @@
             "format": ","
           }
         ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.state == 'SA' && datum.disability_group == 'Autism'"
+        }
+      ],
+      "mark": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#d1495b",
+        "strokeWidth": 3
       }
     },
     {
@@ -164,11 +186,11 @@
       "labelColor": "#1f2933",
       "titleColor": "#616e7c",
       "titleFontWeight": 600,
+      "labelLimit": 320,
       "gridColor": "#e4e7eb",
       "domainColor": "#9aa5b1",
       "tickColor": "#9aa5b1",
-      "labelAngle": 0,
-      "labelLimit": 320
+      "labelAngle": 0
     },
     "legend": {
       "labelFont": "'Source Sans 3', Arial, sans-serif",
@@ -179,6 +201,10 @@
       "titleColor": "#1f2933",
       "labelLimit": 320,
       "titleLimit": 320
+    },
+    "title": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "color": "#1f2933"
     },
     "text": {
       "font": "'Source Sans 3', Arial, sans-serif",

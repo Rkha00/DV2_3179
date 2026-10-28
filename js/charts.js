@@ -20,3 +20,13 @@ const charts = [
 document.fonts.ready.then(() => {
   charts.forEach(([el, spec]) => vegaEmbed(el, spec, embedOptions));
 });
+
+// Show / hide the "how the data was prepared" panel
+const toggle = document.querySelector(".toggle");
+const method = document.getElementById("method");
+toggle.addEventListener("click", () => {
+  const open = toggle.getAttribute("aria-expanded") === "true";
+  toggle.setAttribute("aria-expanded", String(!open));
+  method.hidden = open;
+  toggle.textContent = open ? "Show how the data was prepared" : "Hide how the data was prepared";
+});

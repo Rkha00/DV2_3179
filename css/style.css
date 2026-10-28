@@ -2,12 +2,15 @@
   --text: #1f2933;
   --muted: #616e7c;
   --accent: #d1495b;
-  --context: #c4cbd3;
+  --teal: #1b5f63;
+  --line: #e4e7eb;
   --bg: #fbfaf7;
-  --max-width: 1100px;
+  --max-width: 1120px;
 }
 
 * { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
@@ -21,35 +24,131 @@ body {
 h1, h2, h3 {
   font-family: "Nunito", Arial, sans-serif;
   line-height: 1.2;
+  color: var(--text);
 }
+h1 { font-size: 52px; font-weight: 800; margin: 0 0 12px; }
+h2 { font-size: 32px; font-weight: 800; margin: 0 0 16px; }
+h3 { font-size: 20px; font-weight: 700; margin: 0 0 4px; }
 
-h1 { font-size: 48px; font-weight: 800; margin: 0 0 8px; }
-h2 { font-size: 30px; font-weight: 700; margin: 0 0 12px; }
+p { margin: 0 0 12px; }
+a { color: var(--teal); }
 
 .hero, main, footer {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 32px;
 }
 
-.hero { padding-top: 64px; padding-bottom: 32px; }
-.subtitle { color: var(--muted); font-size: 22px; margin: 0; }
+/* Header */
+.hero { padding-top: 72px; padding-bottom: 40px; }
+.kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.subtitle { color: var(--muted); font-size: 22px; max-width: 62ch; }
+.toc { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 24px; font-size: 16px; font-weight: 600; }
+.toc a { text-decoration: none; border-bottom: 2px solid var(--line); padding-bottom: 2px; }
+.toc a:hover { border-color: var(--teal); }
 
-section { padding: 40px 0; border-top: 1px solid #e4e7eb; }
-section p { max-width: 70ch; }
+/* Sections */
+section { padding: 48px 0; border-top: 1px solid var(--line); }
+.section-number {
+  font-family: "Nunito", Arial, sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--teal);
+  margin-bottom: 4px;
+}
+.lead { font-size: 20px; max-width: 68ch; }
+.transition {
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--teal);
+  margin: 16px 0 0;
+  max-width: 68ch;
+}
+.hint { color: var(--teal); font-weight: 600; }
 
-.chart { width: 100%; margin: 16px 0; }
-
-footer { padding-top: 32px; padding-bottom: 48px; color: var(--muted); font-size: 15px; }
-
-.lead { font-size: 20px; }
-
-h3 { font-size: 21px; font-weight: 700; margin: 0 0 4px; }
-
+/* Figures */
+figure { margin: 0; }
 .viz { margin: 32px 0; }
+.viz-title { margin-bottom: 12px; }
 .viz-title p { margin: 0; color: var(--muted); font-size: 16px; }
-.viz-note { font-size: 16px; max-width: 60ch; }
+.viz-note { font-size: 16px; max-width: 62ch; margin-top: 12px; }
 .source { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.chart { width: 100%; }
+
+/* Two-column rows: titles get a fixed height so charts start on the same line */
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.row > .viz { margin: 24px 0 8px; }
+.row .viz-title { min-height: 76px; }
+
+/* Stat panel */
+.stat-panel { padding-top: 24px; }
+.big-number {
+  font-family: "Nunito", Arial, sans-serif;
+  font-size: 80px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--teal);
+  margin-bottom: 12px;
+}
+.definitions {
+  margin-top: 20px;
+  padding: 16px 20px;
+  border-left: 4px solid var(--teal);
+  background: #f1f5f4;
+  font-size: 16px;
+}
+.definitions p:last-child { margin-bottom: 0; }
+
+/* Conclusion */
+.takeaways { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin: 8px 0 24px; }
+.takeaway { border-top: 4px solid var(--teal); padding-top: 12px; font-size: 17px; }
+.takeaway-number {
+  font-family: "Nunito", Arial, sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--teal);
+  margin-bottom: 4px;
+}
+.closing { font-size: 20px; max-width: 68ch; }
+
+/* About the data */
+.toggle {
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--teal);
+  background: none;
+  border: 2px solid var(--teal);
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+.toggle:hover { background: var(--teal); color: #fff; }
+.method { margin-top: 20px; max-width: 72ch; font-size: 16px; }
+
+/* Footer */
+footer { padding-top: 32px; padding-bottom: 56px; color: var(--muted); font-size: 15px; border-top: 1px solid var(--line); }
+.footer-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; }
+footer p { margin-bottom: 4px; }
+footer ul { padding-left: 20px; margin: 4px 0 0; }
+
+/* Vega-Lite radio buttons (tile cartogram) */
+.vega-bindings { font-size: 15px; margin-top: 8px; }
+.vega-bind-name { font-weight: 700; margin-right: 6px; }
+.vega-bind label { margin-right: 12px; }
+.vega-bind input { accent-color: var(--teal); }
 
 /* Chart tooltips match the page typography */
 body #vg-tooltip-element.vg-tooltip {
@@ -62,43 +161,16 @@ body #vg-tooltip-element.vg-tooltip {
 }
 body #vg-tooltip-element.vg-tooltip table tr td.key { color: var(--muted); }
 
-/* Layout: two-column rows that share top edges (horizontal sight lines) */
-.row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: start;
-}
-.row > .viz { margin: 24px 0; }
-.viz { margin: 32px 0; }
-.viz-title h3 { min-height: 2.4em; }
-figure { margin-left: 0; margin-right: 0; }
+/* Labels on charts should not block clicks on the shapes underneath */
+.chart svg text { pointer-events: none; }
 
-.kicker {
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--accent);
-  margin: 0 0 8px;
+@media (max-width: 1100px) {
+  .row { grid-template-columns: 1fr; gap: 0; }
+  .row .viz-title { min-height: 0; }
 }
-.subtitle { max-width: 60ch; }
-
-.stat-panel { padding-top: 80px; }
-.big-number {
-  font-family: "Nunito", Arial, sans-serif;
-  font-size: 72px;
-  font-weight: 800;
-  line-height: 1;
-  color: #1b5f63;
-  margin: 0 0 8px;
-}
-.muted { color: var(--muted); font-size: 16px; }
-
-footer ul { padding-left: 20px; margin-top: 4px; }
-footer a { color: #1b5f63; }
 
 @media (max-width: 900px) {
-  .row { grid-template-columns: 1fr; gap: 0; }
-  .stat-panel { padding-top: 0; }
+  .row, .takeaways, .footer-grid { grid-template-columns: 1fr; gap: 0; }
+  .row .viz-title { min-height: 0; }
+  h1 { font-size: 40px; }
 }

@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Line chart: young people aged 12-17 dispensed ADHD medication per 1,000, by sex, 2014-15 to 2023-24 (AIHW).",
-  "width": 360,
-  "height": 300,
+  "width": 350,
+  "height": 290,
   "data": {
     "url": "data/adhd_medication_12_17.csv"
   },
@@ -35,10 +35,8 @@
         "format": "d",
         "values": [
           2015,
-          2016,
           2018,
-          2020,
-          2022,
+          2021,
           2024
         ],
         "grid": false
@@ -47,7 +45,7 @@
     "y": {
       "field": "patients_per_1000",
       "type": "quantitative",
-      "title": "Per 1,000 young people",
+      "title": null,
       "scale": {
         "domain": [
           0,
@@ -136,12 +134,12 @@
         "values": [
           {
             "x": 2015.2,
-            "y": 96,
-            "t": "Girls' rate grew more than 5 times,"
+            "y": 97,
+            "t": "Girls' rate grew more than five times,"
           },
           {
             "x": 2015.2,
-            "y": 89,
+            "y": 90,
             "t": "from 9 to 50 per 1,000"
           }
         ]
@@ -150,9 +148,9 @@
         "type": "text",
         "font": "'Source Sans 3', Arial, sans-serif",
         "fontSize": 13,
-        "align": "left",
         "color": "#d1495b",
-        "fontWeight": 600
+        "fontWeight": 600,
+        "align": "left"
       },
       "encoding": {
         "x": {
@@ -186,11 +184,11 @@
       "labelColor": "#1f2933",
       "titleColor": "#616e7c",
       "titleFontWeight": 600,
+      "labelLimit": 320,
       "gridColor": "#e4e7eb",
       "domainColor": "#9aa5b1",
       "tickColor": "#9aa5b1",
-      "labelAngle": 0,
-      "labelLimit": 320
+      "labelAngle": 0
     },
     "legend": {
       "labelFont": "'Source Sans 3', Arial, sans-serif",
@@ -201,6 +199,10 @@
       "titleColor": "#1f2933",
       "labelLimit": 320,
       "titleLimit": 320
+    },
+    "title": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "color": "#1f2933"
     },
     "text": {
       "font": "'Source Sans 3', Arial, sans-serif",

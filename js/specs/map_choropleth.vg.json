@@ -1,335 +1,598 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Choropleth map: children aged 0-14 on the NDIS for autism or developmental delay, per 1,000 children, by state and territory (June 2026).",
-  "width": 560,
-  "height": 470,
-  "padding": {
-    "top": 0,
-    "left": 0,
-    "right": 0,
-    "bottom": 0
-  },
-  "projection": {
-    "type": "conicEqualArea",
-    "parallels": [
-      -18,
-      -36
-    ],
-    "rotate": [
-      -133,
-      0,
-      0
-    ]
-  },
-  "data": {
-    "url": "data/aus_states.topojson",
-    "format": {
-      "type": "topojson",
-      "feature": "states"
-    }
-  },
-  "transform": [
+  "description": "Coordinated views. Left: choropleth map of children aged 0-14 on the NDIS for autism or developmental delay per 1,000 children, by state (June 2026), using an equal-area projection. Right: profile of the selected state by disability group compared with Australia. Click a state to update the profile.",
+  "hconcat": [
     {
-      "lookup": "properties.state",
-      "from": {
-        "data": {
-          "url": "data/ndis_children_by_state.csv"
-        },
-        "key": "state",
-        "fields": [
-          "state_name",
-          "autism_or_delay_per_1000",
-          "autism_or_delay_participants",
-          "autism_or_delay_share_pct",
-          "child_participants",
-          "lon",
-          "lat"
+      "width": 470,
+      "height": 410,
+      "projection": {
+        "type": "conicEqualArea",
+        "parallels": [
+          -18,
+          -36
+        ],
+        "rotate": [
+          -133,
+          0,
+          0
         ]
-      }
-    }
-  ],
-  "layer": [
-    {
-      "params": [
-        {
-          "name": "hover",
-          "select": {
-            "type": "point",
-            "on": "pointerover",
-            "clear": "pointerout",
-            "fields": [
-              "properties.state"
-            ]
-          }
-        }
-      ],
-      "mark": {
-        "type": "geoshape",
-        "stroke": "#ffffff",
-        "strokeWidth": 1.2
       },
-      "encoding": {
-        "color": {
-          "field": "autism_or_delay_per_1000",
-          "type": "quantitative",
-          "scale": {
-            "type": "threshold",
-            "domain": [
-              45,
-              55,
-              65
-            ],
-            "range": [
-              "#dceeea",
-              "#9fd0c6",
-              "#4c9f97",
-              "#1b5f63"
-            ]
-          },
-          "legend": {
-            "title": "Children per 1,000 aged 0–14",
-            "orient": "none",
-            "direction": "horizontal",
-            "labelExpr": "datum.label",
-            "titleFont": "'Source Sans 3', Arial, sans-serif",
-            "titleFontSize": 13,
-            "titleFontWeight": 600,
-            "titleColor": "#1f2933",
-            "labelFont": "'Source Sans 3', Arial, sans-serif",
-            "labelFontSize": 13,
-            "labelColor": "#1f2933",
-            "padding": 6,
-            "legendX": 4,
-            "legendY": 8,
-            "gradientLength": 200,
-            "gradientThickness": 14,
-            "titleLimit": 300
-          }
-        },
-        "strokeWidth": {
-          "condition": {
-            "param": "hover",
-            "empty": false,
-            "value": 2.5
-          },
-          "value": 1.2
-        },
-        "stroke": {
-          "condition": {
-            "param": "hover",
-            "empty": false,
-            "value": "#1f2933"
-          },
-          "value": "#ffffff"
-        },
-        "tooltip": [
-          {
-            "field": "state_name",
-            "type": "nominal",
-            "title": "State or territory"
-          },
-          {
-            "field": "autism_or_delay_per_1000",
-            "type": "quantitative",
-            "title": "Per 1,000 children",
-            "format": ".1f"
-          },
-          {
-            "field": "autism_or_delay_participants",
-            "type": "quantitative",
-            "title": "Children on the NDIS (autism or delay)",
-            "format": ","
-          },
-          {
-            "field": "autism_or_delay_share_pct",
-            "type": "quantitative",
-            "title": "Share of all child participants (%)",
-            "format": ".0f"
-          }
-        ]
-      }
-    },
-    {
       "data": {
-        "values": [
-          {
-            "lon": 149.05,
-            "lat": -35.5,
-            "lon2": 151.75,
-            "lat2": -35.85
-          }
-        ]
-      },
-      "layer": [
-        {
-          "mark": {
-            "type": "rule",
-            "color": "#1f2933",
-            "strokeWidth": 1
-          },
-          "encoding": {
-            "longitude": {
-              "field": "lon",
-              "type": "quantitative"
-            },
-            "latitude": {
-              "field": "lat",
-              "type": "quantitative"
-            },
-            "longitude2": {
-              "field": "lon2"
-            },
-            "latitude2": {
-              "field": "lat2"
-            }
-          }
-        },
-        {
-          "mark": {
-            "type": "point",
-            "shape": "circle",
-            "size": 60,
-            "filled": false,
-            "color": "#1f2933",
-            "strokeWidth": 1.2
-          },
-          "encoding": {
-            "longitude": {
-              "field": "lon",
-              "type": "quantitative"
-            },
-            "latitude": {
-              "field": "lat",
-              "type": "quantitative"
-            }
-          }
+        "url": "data/aus_states.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "states"
         }
-      ]
-    },
-    {
+      },
       "transform": [
         {
-          "calculate": "datum.properties.state == 'ACT' ? 152.6 : datum.properties.state == 'TAS' ? 149.6 : datum.lon",
-          "as": "label_lon"
+          "calculate": "datum.properties.state",
+          "as": "state"
         },
         {
-          "calculate": "datum.properties.state == 'ACT' ? -35.9 : datum.properties.state == 'TAS' ? -42.4 : datum.lat",
-          "as": "label_lat"
-        },
-        {
-          "calculate": "format(datum.autism_or_delay_per_1000, '.0f')",
-          "as": "rate_label"
+          "lookup": "state",
+          "from": {
+            "data": {
+              "url": "data/ndis_children_by_state.csv"
+            },
+            "key": "state",
+            "fields": [
+              "state_name",
+              "autism_or_delay_per_1000",
+              "autism_or_delay_participants",
+              "autism_or_delay_share_pct",
+              "lon",
+              "lat"
+            ]
+          }
         }
       ],
       "layer": [
         {
+          "params": [
+            {
+              "name": "pick",
+              "value": [
+                {
+                  "state": "SA"
+                }
+              ],
+              "select": {
+                "type": "point",
+                "fields": [
+                  "state"
+                ],
+                "on": "click",
+                "toggle": false,
+                "clear": false
+              }
+            }
+          ],
           "mark": {
-            "type": "text",
-            "font": "'Source Sans 3', Arial, sans-serif",
-            "fontSize": 13,
-            "fontWeight": 700,
-            "dy": -8
+            "type": "geoshape",
+            "cursor": "pointer"
           },
           "encoding": {
-            "longitude": {
-              "field": "label_lon",
-              "type": "quantitative"
-            },
-            "latitude": {
-              "field": "label_lat",
-              "type": "quantitative"
-            },
-            "text": {
-              "field": "properties.state"
-            },
             "color": {
-              "condition": {
-                "test": "datum.autism_or_delay_per_1000 >= 55 && datum.properties.state != 'ACT' && datum.properties.state != 'TAS'",
-                "value": "#ffffff"
+              "field": "autism_or_delay_per_1000",
+              "type": "quantitative",
+              "scale": {
+                "type": "threshold",
+                "domain": [
+                  45,
+                  55,
+                  65
+                ],
+                "range": [
+                  "#dceeea",
+                  "#9fd0c6",
+                  "#4c9f97",
+                  "#1b5f63"
+                ]
               },
-              "value": "#1f2933"
-            }
+              "legend": {
+                "title": "Children per 1,000 aged 0–14",
+                "orient": "none",
+                "legendX": 4,
+                "legendY": 4,
+                "direction": "horizontal",
+                "gradientLength": 200,
+                "gradientThickness": 14
+              }
+            },
+            "stroke": {
+              "condition": {
+                "param": "pick",
+                "empty": false,
+                "value": "#1f2933"
+              },
+              "value": "#ffffff"
+            },
+            "strokeWidth": {
+              "condition": {
+                "param": "pick",
+                "empty": false,
+                "value": 2.5
+              },
+              "value": 1
+            },
+            "order": {
+              "condition": {
+                "param": "pick",
+                "empty": false,
+                "value": 1
+              },
+              "value": 0
+            },
+            "tooltip": [
+              {
+                "field": "state_name",
+                "title": "State or territory"
+              },
+              {
+                "field": "autism_or_delay_per_1000",
+                "type": "quantitative",
+                "title": "Per 1,000 children",
+                "format": ".1f"
+              },
+              {
+                "field": "autism_or_delay_participants",
+                "type": "quantitative",
+                "title": "Children (autism or delay)",
+                "format": ","
+              },
+              {
+                "field": "autism_or_delay_share_pct",
+                "type": "quantitative",
+                "title": "Share of all child participants (%)",
+                "format": ".0f"
+              }
+            ]
           }
         },
         {
+          "data": {
+            "values": [
+              {
+                "lon": 149.05,
+                "lat": -35.5,
+                "lon2": 151.75,
+                "lat2": -35.85
+              }
+            ]
+          },
+          "layer": [
+            {
+              "mark": {
+                "type": "rule",
+                "color": "#1f2933",
+                "strokeWidth": 1
+              },
+              "encoding": {
+                "longitude": {
+                  "field": "lon",
+                  "type": "quantitative"
+                },
+                "latitude": {
+                  "field": "lat",
+                  "type": "quantitative"
+                },
+                "longitude2": {
+                  "field": "lon2"
+                },
+                "latitude2": {
+                  "field": "lat2"
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "point",
+                "shape": "circle",
+                "size": 60,
+                "filled": false,
+                "color": "#1f2933",
+                "strokeWidth": 1.2
+              },
+              "encoding": {
+                "longitude": {
+                  "field": "lon",
+                  "type": "quantitative"
+                },
+                "latitude": {
+                  "field": "lat",
+                  "type": "quantitative"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "transform": [
+            {
+              "calculate": "datum.state == 'ACT' ? 152.6 : datum.state == 'TAS' ? 149.6 : toNumber(datum.lon)",
+              "as": "label_lon"
+            },
+            {
+              "calculate": "datum.state == 'ACT' ? -35.9 : datum.state == 'TAS' ? -42.4 : toNumber(datum.lat)",
+              "as": "label_lat"
+            },
+            {
+              "calculate": "format(datum.autism_or_delay_per_1000, '.0f')",
+              "as": "rate_label"
+            },
+            {
+              "calculate": "datum.autism_or_delay_per_1000 >= 55 && datum.state != 'ACT' && datum.state != 'TAS'",
+              "as": "dark_fill"
+            }
+          ],
+          "layer": [
+            {
+              "mark": {
+                "type": "text",
+                "font": "'Source Sans 3', Arial, sans-serif",
+                "fontSize": 13,
+                "fontWeight": 700,
+                "dy": -8
+              },
+              "encoding": {
+                "longitude": {
+                  "field": "label_lon",
+                  "type": "quantitative"
+                },
+                "latitude": {
+                  "field": "label_lat",
+                  "type": "quantitative"
+                },
+                "text": {
+                  "field": "state"
+                },
+                "color": {
+                  "condition": {
+                    "test": "datum.dark_fill",
+                    "value": "#ffffff"
+                  },
+                  "value": "#1f2933"
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "font": "'Source Sans 3', Arial, sans-serif",
+                "fontSize": 13,
+                "dy": 8
+              },
+              "encoding": {
+                "longitude": {
+                  "field": "label_lon",
+                  "type": "quantitative"
+                },
+                "latitude": {
+                  "field": "label_lat",
+                  "type": "quantitative"
+                },
+                "text": {
+                  "field": "rate_label"
+                },
+                "color": {
+                  "condition": {
+                    "test": "datum.dark_fill",
+                    "value": "#ffffff"
+                  },
+                  "value": "#1f2933"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "data": {
+            "values": [
+              {
+                "lon": 130.6,
+                "lat": -37.3,
+                "text": "South Australia: 75 per 1,000,"
+              },
+              {
+                "lon": 130.6,
+                "lat": -38.3,
+                "text": "the highest rate in Australia"
+              },
+              {
+                "lon": 122.3,
+                "lat": -28.6,
+                "text": "Lowest of the states"
+              }
+            ]
+          },
           "mark": {
             "type": "text",
             "font": "'Source Sans 3', Arial, sans-serif",
-            "fontSize": 13,
-            "dy": 8
+            "fontSize": 12,
+            "color": "#d1495b",
+            "fontWeight": 600,
+            "align": "center"
           },
           "encoding": {
             "longitude": {
-              "field": "label_lon",
+              "field": "lon",
               "type": "quantitative"
             },
             "latitude": {
-              "field": "label_lat",
+              "field": "lat",
               "type": "quantitative"
             },
             "text": {
-              "field": "rate_label"
-            },
-            "color": {
-              "condition": {
-                "test": "datum.autism_or_delay_per_1000 >= 55 && datum.properties.state != 'ACT' && datum.properties.state != 'TAS'",
-                "value": "#ffffff"
-              },
-              "value": "#1f2933"
+              "field": "text"
             }
           }
         }
       ]
     },
     {
-      "data": {
-        "values": [
-          {
-            "lon": 130.6,
-            "lat": -37.3,
-            "text": "South Australia: 75 per 1,000,"
+      "vconcat": [
+        {
+          "width": 250,
+          "height": 34,
+          "data": {
+            "url": "data/ndis_children_by_state.csv"
           },
-          {
-            "lon": 130.6,
-            "lat": -38.3,
-            "text": "the highest rate in Australia"
+          "transform": [
+            {
+              "filter": {
+                "param": "pick"
+              }
+            }
+          ],
+          "layer": [
+            {
+              "mark": {
+                "type": "text",
+                "font": "'Source Sans 3', Arial, sans-serif",
+                "fontSize": 18,
+                "align": "left",
+                "fontWeight": 700,
+                "x": 0,
+                "y": 8
+              },
+              "encoding": {
+                "text": {
+                  "field": "state_name"
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "font": "'Source Sans 3', Arial, sans-serif",
+                "fontSize": 13,
+                "align": "left",
+                "color": "#616e7c",
+                "x": 0,
+                "y": 28
+              },
+              "encoding": {
+                "text": {
+                  "value": "Bars: this state.  Red line: Australia overall."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "width": 250,
+          "height": 290,
+          "data": {
+            "url": "data/ndis_children_state_group_age.csv"
           },
-          {
-            "lon": 122.3,
-            "lat": -28.6,
-            "text": "Lowest of the states"
-          }
-        ]
-      },
-      "mark": {
-        "type": "text",
-        "font": "'Source Sans 3', Arial, sans-serif",
-        "fontSize": 12,
-        "fontStyle": "normal",
-        "color": "#d1495b",
-        "fontWeight": 600,
-        "align": "center"
-      },
-      "encoding": {
-        "longitude": {
-          "field": "lon",
-          "type": "quantitative"
-        },
-        "latitude": {
-          "field": "lat",
-          "type": "quantitative"
-        },
-        "text": {
-          "field": "text"
+          "transform": [
+            {
+              "aggregate": [
+                {
+                  "op": "sum",
+                  "field": "participants",
+                  "as": "participants"
+                }
+              ],
+              "groupby": [
+                "state",
+                "state_name",
+                "disability_group"
+              ]
+            },
+            {
+              "lookup": "state",
+              "from": {
+                "data": {
+                  "url": "data/child_population_by_state.csv"
+                },
+                "key": "state",
+                "fields": [
+                  "pop_0_14"
+                ]
+              }
+            },
+            {
+              "calculate": "datum.participants / datum.pop_0_14 * 1000",
+              "as": "per_1000"
+            },
+            {
+              "joinaggregate": [
+                {
+                  "op": "sum",
+                  "field": "participants",
+                  "as": "nat_participants"
+                },
+                {
+                  "op": "sum",
+                  "field": "pop_0_14",
+                  "as": "nat_pop"
+                }
+              ],
+              "groupby": [
+                "disability_group"
+              ]
+            },
+            {
+              "calculate": "datum.nat_participants / datum.nat_pop * 1000",
+              "as": "nat_per_1000"
+            },
+            {
+              "filter": {
+                "param": "pick"
+              }
+            }
+          ],
+          "encoding": {
+            "y": {
+              "field": "disability_group",
+              "type": "nominal",
+              "sort": [
+                "Autism",
+                "Developmental delay",
+                "Intellectual disability",
+                "Physical or neurological",
+                "Hearing, vision or speech",
+                "Other"
+              ],
+              "title": null,
+              "axis": {
+                "domain": false,
+                "ticks": false,
+                "labelPadding": 6
+              }
+            },
+            "x": {
+              "field": "per_1000",
+              "type": "quantitative",
+              "title": "Children on the NDIS per 1,000",
+              "scale": {
+                "domain": [
+                  0,
+                  60
+                ]
+              },
+              "axis": {
+                "values": [
+                  0,
+                  20,
+                  40,
+                  60
+                ],
+                "grid": false
+              }
+            }
+          },
+          "layer": [
+            {
+              "mark": {
+                "type": "bar",
+                "color": "#1b5f63",
+                "height": 18,
+                "cornerRadiusEnd": 2
+              },
+              "encoding": {
+                "tooltip": [
+                  {
+                    "field": "state_name",
+                    "title": "State or territory"
+                  },
+                  {
+                    "field": "disability_group",
+                    "title": "Disability group"
+                  },
+                  {
+                    "field": "per_1000",
+                    "title": "Per 1,000 children",
+                    "format": ".1f"
+                  },
+                  {
+                    "field": "nat_per_1000",
+                    "title": "Australia",
+                    "format": ".1f"
+                  }
+                ]
+              }
+            },
+            {
+              "mark": {
+                "type": "tick",
+                "color": "#d1495b",
+                "thickness": 2.5,
+                "size": 28
+              },
+              "encoding": {
+                "x": {
+                  "field": "nat_per_1000",
+                  "type": "quantitative"
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "font": "'Source Sans 3', Arial, sans-serif",
+                "fontSize": 12,
+                "align": "left",
+                "dx": 6,
+                "color": "#616e7c"
+              },
+              "encoding": {
+                "x": {
+                  "field": "per_1000",
+                  "type": "quantitative"
+                },
+                "text": {
+                  "field": "per_1000",
+                  "format": ".1f"
+                }
+              }
+            }
+          ]
         }
-      }
+      ]
     }
   ],
+  "spacing": 40,
   "config": {
+    "font": "'Source Sans 3', Arial, sans-serif",
+    "background": "transparent",
     "view": {
       "stroke": null
     },
-    "font": "'Source Sans 3', Arial, sans-serif"
-  },
-  "background": "transparent"
+    "axis": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#616e7c",
+      "titleFontWeight": 600,
+      "labelLimit": 320,
+      "gridColor": "#e4e7eb",
+      "domainColor": "#9aa5b1",
+      "tickColor": "#9aa5b1",
+      "labelAngle": 0
+    },
+    "legend": {
+      "labelFont": "'Source Sans 3', Arial, sans-serif",
+      "titleFont": "'Source Sans 3', Arial, sans-serif",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "labelColor": "#1f2933",
+      "titleColor": "#1f2933",
+      "labelLimit": 320,
+      "titleLimit": 320
+    },
+    "title": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "color": "#1f2933"
+    },
+    "text": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "fontSize": 13,
+      "color": "#1f2933"
+    }
+  }
 }

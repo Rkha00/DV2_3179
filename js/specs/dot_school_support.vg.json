@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Connected dot plot: percentage of school students aged 5-20 with disability receiving each type of support, autistic students compared with students with other disability, 2022 (ABS SDAC).",
-  "width": 380,
+  "width": 420,
   "height": 250,
   "data": {
     "url": "data/autism_school_experience.csv"
@@ -20,16 +20,18 @@
       "field": "item",
       "type": "nominal",
       "title": null,
-      "sort": {
-        "field": "percent",
-        "op": "max",
-        "order": "descending"
-      },
+      "sort": [
+        "Special tuition",
+        "Counsellor or disability support person",
+        "Special assessment procedure",
+        "Special equipment",
+        "Special access arrangements",
+        "Special transport arrangements"
+      ],
       "axis": {
         "domain": false,
         "ticks": false,
         "grid": true,
-        "labelLimit": 320,
         "labelPadding": 8
       }
     },
@@ -109,6 +111,73 @@
           }
         ]
       }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.group == 'Autistic' && (datum.item == 'Special tuition' || datum.item == 'Counsellor or disability support person')"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "font": "'Source Sans 3', Arial, sans-serif",
+        "fontSize": 13,
+        "align": "left",
+        "dx": 10,
+        "fontWeight": 700,
+        "color": "#1b5f63"
+      },
+      "encoding": {
+        "text": {
+          "field": "percent",
+          "format": ".0f"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "percent": 12.5,
+            "item": "Special access arrangements",
+            "t": "Autistic students are more than twice as likely",
+            "dy": 0
+          },
+          {
+            "percent": 12.5,
+            "item": "Special access arrangements",
+            "t": "to have a counsellor or disability support person",
+            "dy": 15
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "font": "'Source Sans 3', Arial, sans-serif",
+        "fontSize": 12,
+        "color": "#d1495b",
+        "fontWeight": 600,
+        "align": "left",
+        "dy": -6
+      },
+      "encoding": {
+        "x": {
+          "field": "percent",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "item",
+          "type": "nominal"
+        },
+        "text": {
+          "field": "t"
+        },
+        "yOffset": {
+          "field": "dy",
+          "type": "quantitative",
+          "scale": null
+        }
+      }
     }
   ],
   "config": {
@@ -125,11 +194,11 @@
       "labelColor": "#1f2933",
       "titleColor": "#616e7c",
       "titleFontWeight": 600,
+      "labelLimit": 320,
       "gridColor": "#e4e7eb",
       "domainColor": "#9aa5b1",
       "tickColor": "#9aa5b1",
-      "labelAngle": 0,
-      "labelLimit": 320
+      "labelAngle": 0
     },
     "legend": {
       "labelFont": "'Source Sans 3', Arial, sans-serif",
@@ -140,6 +209,10 @@
       "titleColor": "#1f2933",
       "labelLimit": 320,
       "titleLimit": 320
+    },
+    "title": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "color": "#1f2933"
     },
     "text": {
       "font": "'Source Sans 3', Arial, sans-serif",

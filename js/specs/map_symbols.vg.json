@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Proportional symbol map: number of children aged 0-14 on the NDIS in each state and territory, June 2026. Circle area is proportional to the number of children.",
-  "width": 460,
-  "height": 400,
+  "width": 440,
+  "height": 470,
   "projection": {
     "type": "conicEqualArea",
     "parallels": [
@@ -37,8 +37,16 @@
       },
       "transform": [
         {
-          "calculate": "datum.child_participants >= 1000 ? format(datum.child_participants / 1000, '.0f') + 'k' : datum.child_participants",
+          "calculate": "format(datum.child_participants / 1000, '.0f') + 'k'",
           "as": "count_label"
+        },
+        {
+          "calculate": "toNumber(datum.lon)",
+          "as": "x"
+        },
+        {
+          "calculate": "toNumber(datum.lat)",
+          "as": "y"
         }
       ],
       "layer": [
@@ -46,17 +54,17 @@
           "mark": {
             "type": "circle",
             "fill": "#1b5f63",
-            "fillOpacity": 0.75,
+            "fillOpacity": 0.78,
             "stroke": "#ffffff",
             "strokeWidth": 1.2
           },
           "encoding": {
             "longitude": {
-              "field": "lon",
+              "field": "x",
               "type": "quantitative"
             },
             "latitude": {
-              "field": "lat",
+              "field": "y",
               "type": "quantitative"
             },
             "size": {
@@ -76,7 +84,7 @@
                 "title": "Children aged 0–14 on the NDIS",
                 "orient": "none",
                 "legendX": 0,
-                "legendY": 0,
+                "legendY": 375,
                 "values": [
                   10000,
                   50000,
@@ -84,7 +92,7 @@
                 ],
                 "labelExpr": "format(datum.value, ',')",
                 "symbolFillColor": "#1b5f63",
-                "symbolOpacity": 0.75,
+                "symbolOpacity": 0.78,
                 "symbolStrokeColor": "#ffffff",
                 "direction": "horizontal"
               }
@@ -96,11 +104,13 @@
               },
               {
                 "field": "child_participants",
+                "type": "quantitative",
                 "title": "Children aged 0–14 on the NDIS",
                 "format": ","
               },
               {
                 "field": "per_1000_children",
+                "type": "quantitative",
                 "title": "Per 1,000 children",
                 "format": ".1f"
               }
@@ -122,11 +132,11 @@
           },
           "encoding": {
             "longitude": {
-              "field": "lon",
+              "field": "x",
               "type": "quantitative"
             },
             "latitude": {
-              "field": "lat",
+              "field": "y",
               "type": "quantitative"
             },
             "text": {
@@ -140,11 +150,11 @@
               "filter": "datum.child_participants < 20000"
             },
             {
-              "calculate": "datum.state == 'ACT' ? 152.4 : datum.state == 'TAS' ? 149.8 : toNumber(datum.lon)",
+              "calculate": "datum.state == 'ACT' ? 152.4 : datum.state == 'TAS' ? 149.8 : datum.x",
               "as": "lx"
             },
             {
-              "calculate": "datum.state == 'ACT' ? -36.2 : datum.state == 'TAS' ? -42.3 : toNumber(datum.lat) + 2.6",
+              "calculate": "datum.state == 'ACT' ? -36.2 : datum.state == 'TAS' ? -42.3 : datum.y - 2.4",
               "as": "ly"
             },
             {
@@ -156,8 +166,7 @@
             "type": "text",
             "font": "'Source Sans 3', Arial, sans-serif",
             "fontSize": 13,
-            "fontWeight": 700,
-            "align": "center"
+            "fontWeight": 700
           },
           "encoding": {
             "longitude": {
@@ -174,6 +183,42 @@
           }
         }
       ]
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "lon": 125.0,
+            "lat": -13.0,
+            "t": "NSW and Victoria together have"
+          },
+          {
+            "lon": 125.0,
+            "lat": -14.2,
+            "t": "more than half of all children"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "font": "'Source Sans 3', Arial, sans-serif",
+        "fontSize": 12,
+        "color": "#d1495b",
+        "fontWeight": 600
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "t"
+        }
+      }
     }
   ],
   "config": {
@@ -190,11 +235,11 @@
       "labelColor": "#1f2933",
       "titleColor": "#616e7c",
       "titleFontWeight": 600,
+      "labelLimit": 320,
       "gridColor": "#e4e7eb",
       "domainColor": "#9aa5b1",
       "tickColor": "#9aa5b1",
-      "labelAngle": 0,
-      "labelLimit": 320
+      "labelAngle": 0
     },
     "legend": {
       "labelFont": "'Source Sans 3', Arial, sans-serif",
@@ -205,6 +250,10 @@
       "titleColor": "#1f2933",
       "labelLimit": 320,
       "titleLimit": 320
+    },
+    "title": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "color": "#1f2933"
     },
     "text": {
       "font": "'Source Sans 3', Arial, sans-serif",

@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Slope chart: percentage of each age group who are autistic, 2015 compared with 2022 (ABS SDAC).",
-  "width": 300,
-  "height": 340,
+  "width": 280,
+  "height": 330,
   "data": {
     "url": "data/autism_by_age_year.csv"
   },
@@ -76,8 +76,7 @@
   "layer": [
     {
       "mark": {
-        "type": "line",
-        "strokeWidth": 2.5
+        "type": "line"
       },
       "encoding": {
         "color": {
@@ -129,7 +128,7 @@
     {
       "transform": [
         {
-          "filter": "datum.year == 2022"
+          "filter": "datum.year == 2022 && datum.highlight"
         }
       ],
       "mark": {
@@ -137,25 +136,33 @@
         "font": "'Source Sans 3', Arial, sans-serif",
         "fontSize": 13,
         "align": "left",
-        "dx": 10
+        "dx": 10,
+        "fontWeight": 700,
+        "color": "#1b5f63"
       },
       "encoding": {
         "text": {
           "field": "label"
-        },
-        "color": {
-          "condition": {
-            "test": "datum.highlight",
-            "value": "#1b5f63"
-          },
-          "value": "#616e7c"
-        },
-        "fontWeight": {
-          "condition": {
-            "test": "datum.highlight",
-            "value": 700
-          },
-          "value": 400
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.year == 2022 && !datum.highlight"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "font": "'Source Sans 3', Arial, sans-serif",
+        "fontSize": 13,
+        "align": "left",
+        "dx": 10,
+        "color": "#616e7c"
+      },
+      "encoding": {
+        "text": {
+          "field": "label"
         }
       }
     },
@@ -179,6 +186,58 @@
           "field": "pct"
         }
       }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "year": 2022,
+            "percent": 2.35,
+            "t": "more than doubled"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "font": "'Source Sans 3', Arial, sans-serif",
+        "fontSize": 12,
+        "color": "#d1495b",
+        "fontWeight": 600,
+        "align": "left",
+        "dx": 10
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "title": null,
+          "axis": {
+            "domain": false,
+            "ticks": false,
+            "labelFontSize": 14,
+            "labelFontWeight": 700,
+            "labelPadding": 8,
+            "orient": "top"
+          },
+          "scale": {
+            "padding": 0.15
+          }
+        },
+        "y": {
+          "field": "percent",
+          "type": "quantitative",
+          "axis": null,
+          "scale": {
+            "domain": [
+              0,
+              5
+            ]
+          }
+        },
+        "text": {
+          "field": "t"
+        }
+      }
     }
   ],
   "config": {
@@ -195,11 +254,11 @@
       "labelColor": "#1f2933",
       "titleColor": "#616e7c",
       "titleFontWeight": 600,
+      "labelLimit": 320,
       "gridColor": "#e4e7eb",
       "domainColor": "#9aa5b1",
       "tickColor": "#9aa5b1",
-      "labelAngle": 0,
-      "labelLimit": 320
+      "labelAngle": 0
     },
     "legend": {
       "labelFont": "'Source Sans 3', Arial, sans-serif",
@@ -210,6 +269,10 @@
       "titleColor": "#1f2933",
       "labelLimit": 320,
       "titleLimit": 320
+    },
+    "title": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "color": "#1f2933"
     },
     "text": {
       "font": "'Source Sans 3', Arial, sans-serif",

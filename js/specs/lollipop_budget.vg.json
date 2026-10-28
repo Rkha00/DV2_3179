@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Lollipop chart: average yearly NDIS plan budget per child aged 0-14, by disability group, June 2026.",
-  "width": 270,
+  "description": "Lollipop chart: average yearly NDIS plan budget per child aged 0-14, by disability group, June 2026. The red line is the average for all children.",
+  "width": 260,
   "height": 250,
   "data": {
     "url": "data/ndis_children_national_group_age.csv"
@@ -33,6 +33,24 @@
       "as": "avg_budget"
     },
     {
+      "joinaggregate": [
+        {
+          "op": "sum",
+          "field": "total",
+          "as": "all_total"
+        },
+        {
+          "op": "sum",
+          "field": "participants",
+          "as": "all_participants"
+        }
+      ]
+    },
+    {
+      "calculate": "datum.all_total / datum.all_participants",
+      "as": "all_avg"
+    },
+    {
       "calculate": "datum.disability_group == 'Autism' || datum.disability_group == 'Developmental delay'",
       "as": "focus"
     }
@@ -45,8 +63,7 @@
       "title": null,
       "axis": {
         "domain": false,
-        "ticks": false,
-        "labelLimit": 320
+        "ticks": false
       }
     },
     "x": {
@@ -56,7 +73,7 @@
       "scale": {
         "domain": [
           0,
-          90000
+          95000
         ]
       },
       "axis": {
@@ -67,11 +84,31 @@
           60000,
           80000
         ],
-        "labelExpr": "'$' + datum.value / 1000 + 'k'"
+        "labelExpr": "'$' + datum.value / 1000 + 'k'",
+        "grid": false
       }
     }
   },
   "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#d1495b",
+        "strokeDash": [
+          4,
+          3
+        ],
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "x": {
+          "aggregate": "mean",
+          "field": "all_avg",
+          "type": "quantitative"
+        },
+        "y": null
+      }
+    },
     {
       "mark": {
         "type": "rule",
@@ -137,6 +174,43 @@
           "format": "$,.0f"
         }
       }
+    },
+    {
+      "transform": [
+        {
+          "aggregate": [
+            {
+              "op": "mean",
+              "field": "all_avg",
+              "as": "all_avg"
+            }
+          ]
+        },
+        {
+          "calculate": "'All children: ' + format(datum.all_avg, '$,.0f')",
+          "as": "t"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "font": "'Source Sans 3', Arial, sans-serif",
+        "fontSize": 12,
+        "color": "#d1495b",
+        "fontWeight": 600,
+        "align": "left",
+        "dx": 4,
+        "y": -8
+      },
+      "encoding": {
+        "x": {
+          "field": "all_avg",
+          "type": "quantitative"
+        },
+        "y": null,
+        "text": {
+          "field": "t"
+        }
+      }
     }
   ],
   "config": {
@@ -153,11 +227,11 @@
       "labelColor": "#1f2933",
       "titleColor": "#616e7c",
       "titleFontWeight": 600,
+      "labelLimit": 320,
       "gridColor": "#e4e7eb",
       "domainColor": "#9aa5b1",
       "tickColor": "#9aa5b1",
-      "labelAngle": 0,
-      "labelLimit": 320
+      "labelAngle": 0
     },
     "legend": {
       "labelFont": "'Source Sans 3', Arial, sans-serif",
@@ -168,6 +242,10 @@
       "titleColor": "#1f2933",
       "labelLimit": 320,
       "titleLimit": 320
+    },
+    "title": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "color": "#1f2933"
     },
     "text": {
       "font": "'Source Sans 3', Arial, sans-serif",

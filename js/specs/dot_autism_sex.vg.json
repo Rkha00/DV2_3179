@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Connected dot plot: percentage of males and females in each age group who are autistic, 2022 (ABS SDAC).",
-  "width": 400,
+  "width": 380,
   "height": 230,
   "data": {
     "url": "data/autism_by_age_sex.csv"
@@ -25,12 +25,13 @@
           "40+"
         ]
       },
-      "title": "Age group",
+      "title": null,
       "axis": {
         "domain": false,
         "ticks": false,
         "grid": true,
-        "labelPadding": 8
+        "labelPadding": 8,
+        "labelExpr": "datum.value + ' yrs'"
       }
     },
     "x": {
@@ -116,7 +117,7 @@
     {
       "transform": [
         {
-          "filter": "datum.age_group == '5–14'"
+          "filter": "datum.age_group == '5–14' || datum.age_group == '15–24'"
         }
       ],
       "mark": {
@@ -152,12 +153,13 @@
       "data": {
         "values": [
           {
-            "x": 4.2,
+            "x": 4.0,
             "y": "0–4",
-            "t": "At school age, boys are about"
+            "t": "At school age, boys are",
+            "dy": 0
           },
           {
-            "x": 4.2,
+            "x": 4.0,
             "y": "0–4",
             "t": "2.7 times as likely to be autistic",
             "dy": 15
@@ -168,9 +170,9 @@
         "type": "text",
         "font": "'Source Sans 3', Arial, sans-serif",
         "fontSize": 13,
-        "align": "left",
         "color": "#d1495b",
         "fontWeight": 600,
+        "align": "left",
         "dy": -6
       },
       "encoding": {
@@ -207,11 +209,11 @@
       "labelColor": "#1f2933",
       "titleColor": "#616e7c",
       "titleFontWeight": 600,
+      "labelLimit": 320,
       "gridColor": "#e4e7eb",
       "domainColor": "#9aa5b1",
       "tickColor": "#9aa5b1",
-      "labelAngle": 0,
-      "labelLimit": 320
+      "labelAngle": 0
     },
     "legend": {
       "labelFont": "'Source Sans 3', Arial, sans-serif",
@@ -222,6 +224,10 @@
       "titleColor": "#1f2933",
       "labelLimit": 320,
       "titleLimit": 320
+    },
+    "title": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "color": "#1f2933"
     },
     "text": {
       "font": "'Source Sans 3', Arial, sans-serif",

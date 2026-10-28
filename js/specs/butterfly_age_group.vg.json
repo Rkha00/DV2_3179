@@ -7,7 +7,7 @@
   "spacing": 0,
   "hconcat": [
     {
-      "width": 165,
+      "width": 160,
       "height": 250,
       "transform": [
         {
@@ -16,7 +16,6 @@
       ],
       "title": {
         "text": "Aged 0–8",
-        "font": "'Source Sans 3', Arial, sans-serif",
         "fontSize": 14,
         "fontWeight": 700,
         "color": "#4c9f97",
@@ -53,7 +52,7 @@
               50000,
               100000
             ],
-            "format": "~s",
+            "labelExpr": "datum.value == 0 ? '0' : datum.value / 1000 + 'k'",
             "grid": false
           }
         }
@@ -107,6 +106,18 @@
       "view": {
         "stroke": null
       },
+      "transform": [
+        {
+          "filter": "datum.age_band == '0–8'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "font": "'Source Sans 3', Arial, sans-serif",
+        "fontSize": 13,
+        "fontWeight": 600,
+        "align": "center"
+      },
       "encoding": {
         "y": {
           "field": "disability_group",
@@ -124,22 +135,10 @@
         "text": {
           "field": "disability_group"
         }
-      },
-      "transform": [
-        {
-          "filter": "datum.age_band == '0–8'"
-        }
-      ],
-      "mark": {
-        "type": "text",
-        "font": "'Source Sans 3', Arial, sans-serif",
-        "fontSize": 13,
-        "fontWeight": 600,
-        "align": "center"
       }
     },
     {
-      "width": 165,
+      "width": 160,
       "height": 250,
       "transform": [
         {
@@ -148,7 +147,6 @@
       ],
       "title": {
         "text": "Aged 9–14",
-        "font": "'Source Sans 3', Arial, sans-serif",
         "fontSize": 14,
         "fontWeight": 700,
         "color": "#1b5f63",
@@ -185,7 +183,7 @@
               50000,
               100000
             ],
-            "format": "~s",
+            "labelExpr": "datum.value == 0 ? '0' : datum.value / 1000 + 'k'",
             "grid": false
           }
         }
@@ -230,6 +228,27 @@
               "format": ",.0f"
             }
           }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum.disability_group == 'Developmental delay'"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "font": "'Source Sans 3', Arial, sans-serif",
+            "fontSize": 12,
+            "color": "#d1495b",
+            "fontWeight": 600,
+            "align": "left",
+            "dx": 34
+          },
+          "encoding": {
+            "text": {
+              "value": "only for under-6s"
+            }
+          }
         }
       ]
     }
@@ -248,11 +267,11 @@
       "labelColor": "#1f2933",
       "titleColor": "#616e7c",
       "titleFontWeight": 600,
+      "labelLimit": 320,
       "gridColor": "#e4e7eb",
       "domainColor": "#9aa5b1",
       "tickColor": "#9aa5b1",
-      "labelAngle": 0,
-      "labelLimit": 320
+      "labelAngle": 0
     },
     "legend": {
       "labelFont": "'Source Sans 3', Arial, sans-serif",
@@ -263,6 +282,10 @@
       "titleColor": "#1f2933",
       "labelLimit": 320,
       "titleLimit": 320
+    },
+    "title": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "color": "#1f2933"
     },
     "text": {
       "font": "'Source Sans 3', Arial, sans-serif",

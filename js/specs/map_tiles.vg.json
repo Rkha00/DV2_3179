@@ -1,12 +1,82 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Tile grid cartogram: each state and territory is an equal-sized square in roughly its geographic position, coloured by autistic children on the NDIS per 1,000 children (June 2026).",
-  "width": 340,
-  "height": 340,
+  "description": "Tile grid cartogram: each state and territory is an equal-sized square in roughly its geographic position. Colour shows children on the NDIS per 1,000 children for the disability group chosen with the buttons (June 2026).",
+  "width": 330,
+  "height": 330,
+  "params": [
+    {
+      "name": "group",
+      "value": "Autism",
+      "bind": {
+        "input": "radio",
+        "options": [
+          "Autism",
+          "Developmental delay",
+          "Intellectual disability"
+        ],
+        "name": "Show: "
+      }
+    }
+  ],
   "data": {
-    "url": "data/ndis_children_by_state.csv"
+    "url": "data/ndis_children_state_group_age.csv"
   },
   "transform": [
+    {
+      "aggregate": [
+        {
+          "op": "sum",
+          "field": "participants",
+          "as": "participants"
+        }
+      ],
+      "groupby": [
+        "state",
+        "state_name",
+        "disability_group"
+      ]
+    },
+    {
+      "filter": "datum.disability_group == group"
+    },
+    {
+      "lookup": "state",
+      "from": {
+        "data": {
+          "url": "data/child_population_by_state.csv"
+        },
+        "key": "state",
+        "fields": [
+          "pop_0_14"
+        ]
+      }
+    },
+    {
+      "lookup": "state",
+      "from": {
+        "data": {
+          "url": "data/ndis_children_by_state.csv"
+        },
+        "key": "state",
+        "fields": [
+          "tile_col",
+          "tile_row"
+        ]
+      }
+    },
+    {
+      "calculate": "datum.participants / datum.pop_0_14 * 1000",
+      "as": "per_1000"
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "max",
+          "field": "per_1000",
+          "as": "max_rate"
+        }
+      ]
+    },
     {
       "calculate": "toNumber(datum.tile_col)",
       "as": "col"
@@ -54,31 +124,25 @@
       },
       "encoding": {
         "color": {
-          "field": "autism_per_1000",
+          "field": "per_1000",
           "type": "quantitative",
           "scale": {
-            "type": "threshold",
-            "domain": [
-              30,
-              40,
-              50
-            ],
             "range": [
-              "#dceeea",
-              "#9fd0c6",
-              "#4c9f97",
+              "#e3f1ee",
               "#1b5f63"
-            ]
+            ],
+            "zero": true
           },
           "legend": {
             "title": [
-              "Autistic children",
-              "per 1,000"
+              "Per 1,000",
+              "children"
             ],
             "orient": "none",
             "legendX": 0,
-            "legendY": 200,
-            "direction": "vertical"
+            "legendY": 195,
+            "direction": "vertical",
+            "gradientLength": 110
           }
         },
         "tooltip": [
@@ -87,17 +151,35 @@
             "title": "State or territory"
           },
           {
-            "field": "autism_per_1000",
-            "title": "Autistic children on the NDIS per 1,000",
+            "field": "disability_group",
+            "title": "Disability group"
+          },
+          {
+            "field": "per_1000",
+            "title": "Per 1,000 children",
             "format": ".1f"
           },
           {
-            "field": "autism_participants",
+            "field": "participants",
             "title": "Number of children",
             "format": ","
           }
         ]
       }
+    },
+    {
+      "mark": {
+        "type": "rect",
+        "cornerRadius": 4,
+        "fill": null,
+        "stroke": "#d1495b",
+        "strokeWidth": 3
+      },
+      "transform": [
+        {
+          "filter": "datum.per_1000 == datum.max_rate"
+        }
+      ]
     },
     {
       "mark": {
@@ -113,7 +195,7 @@
         },
         "color": {
           "condition": {
-            "test": "datum.autism_per_1000 >= 40",
+            "test": "datum.per_1000 >= datum.max_rate * 0.6",
             "value": "#ffffff"
           },
           "value": "#1f2933"
@@ -129,12 +211,12 @@
       },
       "encoding": {
         "text": {
-          "field": "autism_per_1000",
-          "format": ".0f"
+          "field": "per_1000",
+          "format": ".1f"
         },
         "color": {
           "condition": {
-            "test": "datum.autism_per_1000 >= 40",
+            "test": "datum.per_1000 >= datum.max_rate * 0.6",
             "value": "#ffffff"
           },
           "value": "#1f2933"
@@ -156,11 +238,11 @@
       "labelColor": "#1f2933",
       "titleColor": "#616e7c",
       "titleFontWeight": 600,
+      "labelLimit": 320,
       "gridColor": "#e4e7eb",
       "domainColor": "#9aa5b1",
       "tickColor": "#9aa5b1",
-      "labelAngle": 0,
-      "labelLimit": 320
+      "labelAngle": 0
     },
     "legend": {
       "labelFont": "'Source Sans 3', Arial, sans-serif",
@@ -171,6 +253,10 @@
       "titleColor": "#1f2933",
       "labelLimit": 320,
       "titleLimit": 320
+    },
+    "title": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "color": "#1f2933"
     },
     "text": {
       "font": "'Source Sans 3', Arial, sans-serif",

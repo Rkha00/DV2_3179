@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Normalised stacked bar chart: share of NDIS plan budgets for children aged 0-14 spent on each type of support, by disability group, June 2026.",
-  "width": 300,
+  "width": 290,
   "height": 250,
   "data": {
     "url": "data/ndis_children_budget_by_support.csv"
@@ -22,13 +22,12 @@
     {
       "calculate": "datum.total_budget / datum.group_total",
       "as": "share"
+    },
+    {
+      "calculate": "indexof([\"Therapy and skill building\", \"Everyday support\", \"Equipment and home changes\"], datum.support_type)",
+      "as": "support_order"
     }
   ],
-  "mark": {
-    "type": "bar",
-    "stroke": "#fbfaf7",
-    "strokeWidth": 1
-  },
   "encoding": {
     "y": {
       "field": "disability_group",
@@ -44,67 +43,105 @@
       ],
       "axis": {
         "domain": false,
-        "ticks": false,
-        "labelLimit": 320
+        "ticks": false
       }
-    },
-    "x": {
-      "field": "share",
-      "type": "quantitative",
-      "stack": "normalize",
-      "title": "Share of plan budgets",
-      "axis": {
-        "format": "%",
-        "values": [
-          0,
-          0.25,
-          0.5,
-          0.75,
-          1
-        ]
-      }
-    },
-    "color": {
-      "field": "support_type",
-      "type": "nominal",
-      "scale": {
-        "domain": [
-          "Therapy and skill building",
-          "Everyday support",
-          "Equipment and home changes"
-        ],
-        "range": [
-          "#1b5f63",
-          "#9fd0c6",
-          "#c98a1b"
-        ]
-      },
-      "legend": {
-        "orient": "top",
-        "title": null,
-        "direction": "vertical"
-      }
-    },
-    "order": {
-      "field": "support_type",
-      "sort": "descending"
-    },
-    "tooltip": [
-      {
-        "field": "disability_group",
-        "title": "Disability group"
-      },
-      {
-        "field": "support_type",
-        "title": "Support type"
-      },
-      {
-        "field": "share",
-        "title": "Share of budget",
-        "format": ".0%"
-      }
-    ]
+    }
   },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "stroke": "#fbfaf7",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "x": {
+          "field": "share",
+          "type": "quantitative",
+          "stack": "normalize",
+          "title": "Share of plan budgets",
+          "axis": {
+            "format": "%",
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "grid": false
+          }
+        },
+        "color": {
+          "field": "support_type",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Therapy and skill building",
+              "Everyday support",
+              "Equipment and home changes"
+            ],
+            "range": [
+              "#1b5f63",
+              "#9fd0c6",
+              "#c98a1b"
+            ]
+          },
+          "legend": {
+            "orient": "top",
+            "title": null,
+            "direction": "vertical"
+          }
+        },
+        "order": {
+          "field": "support_order",
+          "type": "quantitative",
+          "sort": "ascending"
+        },
+        "tooltip": [
+          {
+            "field": "disability_group",
+            "title": "Disability group"
+          },
+          {
+            "field": "support_type",
+            "title": "Support type"
+          },
+          {
+            "field": "share",
+            "title": "Share of budget",
+            "format": ".0%"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.support_type == 'Therapy and skill building'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "font": "'Source Sans 3', Arial, sans-serif",
+        "fontSize": 13,
+        "align": "left",
+        "dx": 6,
+        "color": "#ffffff",
+        "fontWeight": 700
+      },
+      "encoding": {
+        "x": {
+          "datum": 0,
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "share",
+          "format": ".0%"
+        }
+      }
+    }
+  ],
   "config": {
     "font": "'Source Sans 3', Arial, sans-serif",
     "background": "transparent",
@@ -119,11 +156,11 @@
       "labelColor": "#1f2933",
       "titleColor": "#616e7c",
       "titleFontWeight": 600,
+      "labelLimit": 320,
       "gridColor": "#e4e7eb",
       "domainColor": "#9aa5b1",
       "tickColor": "#9aa5b1",
-      "labelAngle": 0,
-      "labelLimit": 320
+      "labelAngle": 0
     },
     "legend": {
       "labelFont": "'Source Sans 3', Arial, sans-serif",
@@ -134,6 +171,10 @@
       "titleColor": "#1f2933",
       "labelLimit": 320,
       "titleLimit": 320
+    },
+    "title": {
+      "font": "'Source Sans 3', Arial, sans-serif",
+      "color": "#1f2933"
     },
     "text": {
       "font": "'Source Sans 3', Arial, sans-serif",
